@@ -3,72 +3,44 @@
 import { useState, useEffect } from 'react'
 
 const adults = [
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_88d23b183c834d8087dfa25c1238b404~mv2.png',
-    alt: 'Legion and Liberty - CCR Kennels Cane Corso',
-    title: 'Legion & Liberty',
-  },
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_1d1fb333150841b08bee8fb00f87fbaf~mv2.png',
-    alt: 'Liberty Pedigree',
-    title: 'Liberty',
-  },
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_b3f7394a1ce147d88ab60faf91cedee3~mv2.jpg',
-    alt: 'Adult Cane Corso',
-    title: 'Legion',
-  },
+  { src: '/images/gallery/legion-liberty-house-1.jpg', alt: 'Legion and Liberty in front of the house', title: 'Legion & Liberty' },
+  { src: '/images/gallery/legion-liberty-house-2.jpg', alt: 'Legion and Liberty looking up', title: 'Legion & Liberty' },
+  { src: '/images/gallery/legion-liberty-grass.jpg', alt: 'Legion and Liberty on the grass', title: 'Legion & Liberty' },
+  { src: '/images/gallery/liberty-grass.jpg', alt: 'Liberty relaxing on the grass', title: 'Liberty' },
+  { src: '/images/gallery/dogs-swimming.jpg', alt: 'Dogs swimming in the pond', title: 'Pond Day' },
+  { src: '/images/gallery/dogs-sunset-pond.jpg', alt: 'Dogs at the pond at sunset', title: 'Sunset Swim' },
+  { src: '/images/gallery/legion-tree.jpg', alt: 'Legion on a fallen tree', title: 'Legion' },
+  { src: '/images/gallery/legion-bath.jpg', alt: 'Legion after a bath', title: 'Bath Day' },
 ]
 
 const puppies = [
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_e03b4720efbc4c8886864092a53d206e~mv2.jpeg',
-    alt: 'Cane Corso Puppy',
-    title: 'Puppy',
-  },
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_2ef72d7e0d6d453a96926ad727150a63~mv2.jpeg',
-    alt: 'Cane Corso Puppies',
-    title: 'Litter',
-  },
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_294445d6a89b48da838405d60ba0e710~mv2.jpeg',
-    alt: 'Cane Corso Puppies',
-    title: 'Siblings',
-  },
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_f3c2c55e69634c7699d8dbe1c54c4737~mv2.jpeg',
-    alt: 'Cane Corso Puppy',
-    title: 'Growing Strong',
-  },
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_8b3382e38fa14b3c9b8ae3309a86ac41~mv2.jpeg',
-    alt: 'Cane Corso Puppy',
-    title: 'Sweet Face',
-  },
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_3504914e104a453292365e42c543e99d~mv2.jpeg',
-    alt: 'Cane Corso Puppy',
-    title: 'Pup',
-  },
+  // Mom with litter
+  { src: '/images/gallery/mom-newborns-1.jpg', alt: 'Liberty with her newborn puppies', title: 'New Litter' },
+  { src: '/images/gallery/mom-newborns-2.jpg', alt: 'Mom nursing her newborn puppies', title: 'Day 1' },
+  { src: '/images/gallery/mom-nursing.jpg', alt: 'Mom with her newborns', title: 'Mom & Pups' },
+  // Individual newborns
+  { src: '/images/gallery/pup-newborn-hand.jpg', alt: 'Tiny newborn Cane Corso puppy', title: 'Day 1' },
+  { src: '/images/gallery/pup-newborn-pink.jpg', alt: 'Newborn puppy — pink collar', title: 'Pink Girl' },
+  { src: '/images/gallery/pup-newborn-red.jpg', alt: 'Newborn puppy — red collar', title: 'Red Boy' },
+  { src: '/images/gallery/pup-newborn-blue.jpg', alt: 'Newborn puppy — blue collar', title: 'Blue Boy' },
+  { src: '/images/gallery/pup-newborn-orange.jpg', alt: 'Newborn puppy — orange collar', title: 'Orange Boy' },
+  { src: '/images/gallery/pup-newborn-black-pink.jpg', alt: 'Newborn black puppy — pink collar', title: 'Pink Girl' },
+  { src: '/images/gallery/pup-newborn-front.jpg', alt: 'Newborn puppy front portrait', title: 'Chocolate Girl' },
+  // 3-week pupdate series
+  { src: '/images/gallery/pup-3wk-grey.jpg', alt: 'Grey puppy — 3 weeks old', title: 'Pupdate: 3 Weeks' },
+  { src: '/images/gallery/pup-3wk-blue.jpg', alt: 'Blue puppy — 3 weeks old', title: 'Pupdate: 3 Weeks' },
+  { src: '/images/gallery/pup-3wk-darkgrey.jpg', alt: 'Dark grey puppy — 3 weeks old', title: 'Pupdate: 3 Weeks' },
+  { src: '/images/gallery/pup-3wk-grey-purple.jpg', alt: 'Grey puppy purple collar — 3 weeks old', title: 'Pupdate: 3 Weeks' },
+  { src: '/images/gallery/pup-3wk-black.jpg', alt: 'Black puppy — 3 weeks old', title: 'Pupdate: 3 Weeks' },
+  { src: '/images/gallery/pup-3wk-black-pink.jpg', alt: 'Black puppy pink collar — 3 weeks old', title: 'Pupdate: 3 Weeks' },
+  { src: '/images/gallery/pup-3wk-black-green.jpg', alt: 'Black puppy green collar — 3 weeks old', title: 'Pupdate: 3 Weeks' },
+  { src: '/images/gallery/pup-3wk-brindle-red.jpg', alt: 'Brindle puppy red collar — 3 weeks old', title: 'Pupdate: 3 Weeks' },
+  { src: '/images/gallery/pup-3wk-brindle-orange.jpg', alt: 'Brindle puppy orange collar — 3 weeks old', title: 'Pupdate: 3 Weeks' },
 ]
 
 const families = [
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_9cbff718d7ca4ac987b05c91199568c6~mv2.jpg',
-    alt: 'Happy Cane Corso Family',
-    title: 'New Home',
-  },
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_678ac9395e96401ea93a3ab284f00cdf~mv2.jpg',
-    alt: 'Cane Corso with Family',
-    title: 'Forever Home',
-  },
-  {
-    src: 'https://static.wixstatic.com/media/a1daef_a80c38ab024544c6a739f61edc9af97d~mv2.jpg',
-    alt: 'Cane Corso Growing Up',
-    title: 'Growing Up',
-  },
+  { src: '/images/gallery/family-mom-boys.jpg', alt: 'Liberty with her litter and two boys', title: 'Meet the Litter' },
+  { src: '/images/gallery/family-boy-puppies.jpg', alt: 'Boy holding puppies outside', title: 'Puppy Love' },
 ]
 
 type Photo = { src: string; alt: string; title: string }
@@ -148,19 +120,11 @@ export default function Gallery() {
 
         {activeFilter === 'all' ? (
           <>
-            <div className="gallery-section-divider">
-              <span>Adult Dogs</span>
-            </div>
+            <div className="gallery-section-divider"><span>Adult Dogs</span></div>
             <PhotoGrid photos={adults} onOpen={openLightbox} />
-
-            <div className="gallery-section-divider">
-              <span>Puppies</span>
-            </div>
+            <div className="gallery-section-divider"><span>Puppies</span></div>
             <PhotoGrid photos={puppies} onOpen={openLightbox} />
-
-            <div className="gallery-section-divider">
-              <span>Happy Families</span>
-            </div>
+            <div className="gallery-section-divider"><span>Happy Families</span></div>
             <PhotoGrid photos={families} onOpen={openLightbox} />
           </>
         ) : activeFilter === 'adults' ? (
