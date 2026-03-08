@@ -1,0 +1,86 @@
+1:"$Sreact.fragment"
+2:I[32131,["/_next/static/chunks/9f55dac02574ac84.js","/_next/static/chunks/de15e9e744971223.js"],"default"]
+3:I[13989,["/_next/static/chunks/9f55dac02574ac84.js","/_next/static/chunks/de15e9e744971223.js"],"default"]
+7:I[10806,["/_next/static/chunks/9f55dac02574ac84.js","/_next/static/chunks/de15e9e744971223.js"],"default"]
+:HL["/_next/static/chunks/c41a22b148672c8f.css","style"]
+:HL["/images/hero-bg.webp","image",{"fetchPriority":"high"}]
+:HL["https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap","style"]
+:HL["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css","style"]
+:HL["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css","style"]
+:HL["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css","style"]
+0:{"P":null,"b":"UxJNT7STFUfNUKElWcvDL","c":["","blog","ear-cropping-cane-corso"],"q":"","i":false,"f":[[["",{"children":["blog",{"children":[["slug","ear-cropping-cane-corso","d"],{"children":["__PAGE__",{}]}]}]},"$undefined","$undefined",true],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/c41a22b148672c8f.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","link",null,{"rel":"preload","as":"image","href":"/images/hero-bg.webp","fetchPriority":"high"}],["$","link",null,{"rel":"preconnect","href":"https://fonts.googleapis.com"}],["$","link",null,{"rel":"preconnect","href":"https://fonts.gstatic.com","crossOrigin":"anonymous"}],["$","link",null,{"href":"https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap","rel":"stylesheet"}],["$","link",null,{"rel":"stylesheet","href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css"}],["$","link",null,{"rel":"stylesheet","href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css"}],["$","link",null,{"rel":"stylesheet","href":"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css"}],["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"LocalBusiness\",\"name\":\"CCR Kennels\",\"description\":\"Veteran-owned Italian Cane Corso breeder in Southern Illinois. AKC registered puppies with champion bloodlines and 2-year health guarantee.\",\"url\":\"https://www.ccrcorsos.com\",\"telephone\":\"+17069737697\",\"email\":\"ccrkennels2022@gmail.com\",\"address\":{\"@type\":\"PostalAddress\",\"streetAddress\":\"1602 Woods Ln\",\"addressLocality\":\"Centralia\",\"addressRegion\":\"IL\",\"postalCode\":\"62801\",\"addressCountry\":\"US\"},\"geo\":{\"@type\":\"GeoCoordinates\",\"latitude\":38.5253,\"longitude\":-89.1334},\"image\":\"https://static.wixstatic.com/media/a1daef_88d23b183c834d8087dfa25c1238b404~mv2.png\",\"sameAs\":[\"https://www.facebook.com/people/CCR-Kennels/61550619435436/\",\"https://www.instagram.com/ccr_kennels_of_soil/\",\"https://www.tiktok.com/@ccr_kennels\"],\"priceRange\":\"$$\",\"openingHours\":\"Mo-Sa 08:00-18:00\"}"}}]]}],["$","body",null,{"children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]]}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":["$L4",[["$","script","script-0",{"src":"/_next/static/chunks/e20cf3e872ad07e7.js","async":true,"nonce":"$undefined"}]],"$L5"]}],{},null,false,false]},null,false,false]},null,false,false]},null,false,false],"$L6",false]],"m":"$undefined","G":["$7",[]],"S":true}
+8:I[7218,["/_next/static/chunks/9f55dac02574ac84.js","/_next/static/chunks/de15e9e744971223.js"],"OutletBoundary"]
+9:"$Sreact.suspense"
+b:I[7218,["/_next/static/chunks/9f55dac02574ac84.js","/_next/static/chunks/de15e9e744971223.js"],"ViewportBoundary"]
+d:I[7218,["/_next/static/chunks/9f55dac02574ac84.js","/_next/static/chunks/de15e9e744971223.js"],"MetadataBoundary"]
+5:["$","$L8",null,{"children":["$","$9",null,{"name":"Next.MetadataOutlet","children":"$@a"}]}]
+6:["$","$1","h",{"children":[null,["$","$Lb",null,{"children":"$Lc"}],["$","div",null,{"hidden":true,"children":["$","$Ld",null,{"children":["$","$9",null,{"name":"Next.Metadata","children":"$Le"}]}]}],null]}]
+f:I[50635,["/_next/static/chunks/e20cf3e872ad07e7.js"],""]
+:HL["/images/logo.webp","image"]
+10:T1993,<h2>Is Ear Cropping Required?</h2>
+<p>No. CCR Kennels does not automatically crop ears. Ear cropping is entirely elective — it is the personal choice of the purchaser, not a standard part of our breeding program.</p>
+<p>That said, we do offer ear cropping as an available service for buyers who want it, and we have a trusted veterinary partner who performs the procedure with laser technology. If you are interested, there is a specific window and process you must follow.</p>
+<h2>The Timeline: Why It Has to Happen Early</h2>
+<p>Ear cropping must be coordinated and fully paid for <strong>before your puppy reaches 7 weeks of age</strong>. The ideal window is between <strong>4 and 6 weeks old</strong>. After 7 weeks, the cartilage in the ear begins to set and the healing process becomes significantly more difficult — most vets will not perform the procedure past this point.</p>
+<p>This means the conversation needs to happen early. If you are reserving a puppy and you want ears cropped, <strong>bring it up at the time of reservation</strong> — do not wait until the week before go-home day.</p>
+<h2>Where the Procedure Is Done</h2>
+<p>We take puppies to our trusted community veterinary partner:</p>
+<p><strong>Quad Counties Veterinary Clinic</strong>
+<a href="https://www.quadcovet.com/">quadcovet.com</a></p>
+<p>This clinic performs ear cropping using <strong>laser technology</strong>, which offers cleaner cuts, reduced bleeding, and generally faster healing compared to traditional surgical methods. They are experienced with the procedure and familiar with working with large breed puppies.</p>
+<h2>Crop Styles: What to Request</h2>
+<p>The two most common requests for Cane Corsos are:</p>
+<ul>
+<li><strong>Short crop</strong> — a conservative cut that leaves more ear leather. This style has the highest success rate for standing properly as the puppy heals and the cartilage strengthens.</li>
+<li><strong>Show crop</strong> — a slightly longer crop commonly seen in the conformation ring. This style requires more diligent aftercare and posting to achieve an upright stand.</li>
+</ul>
+<p><strong>Our recommendation is the short crop.</strong> It heals more reliably, stands more consistently, and is well-suited to the Cane Corso's head structure. Unless you are specifically planning to compete in AKC conformation where a show crop may be preferred, the short crop is the practical choice for most buyers.</p>
+<p>That said, the final decision is yours. Just know that longer crops require more aftercare commitment and there is always a possibility the ears do not stand perfectly — that is true of any crop style and is part of the risk inherent in an elective cosmetic procedure.</p>
+<h2>Cost</h2>
+<p>The cost of ear cropping is <strong>set entirely by Quad Counties Veterinary Clinic</strong> and is not controlled or marked up by CCR Kennels.</p>
+<p>Current pricing typically ranges from <strong>$250 to $350</strong>, with the final cost depending on the weight of the puppy at the time of the procedure. Heavier puppies require more anesthesia and time, which affects the price.</p>
+<p>You will pay the veterinary clinic directly or as arranged through the coordination process. Prices are subject to change — confirm current pricing with the vet when you coordinate.</p>
+<h2>What CCR Kennels Handles</h2>
+<p>When you request ear cropping through us, here is what we take care of:</p>
+<ul>
+<li><strong>Scheduling and coordination</strong> with Quad Counties Veterinary Clinic on your behalf</li>
+<li><strong>Transportation</strong> of your puppy to and from the vet for the cropping appointment</li>
+<li><strong>Before and after care</strong> of the puppy while it is still in our care</li>
+<li><strong>Follow-up appointments</strong> as needed during the healing period prior to go-home day</li>
+</ul>
+<p>We are invested in this process going smoothly because these are our puppies until go-home day. We will not hand off coordination carelessly.</p>
+<h2>What Is Required Before We Can Proceed</h2>
+<p>Before any ear cropping can be scheduled, <strong>two things must be completed</strong>:</p>
+<ol>
+<li><strong>All deposits must be collected in full</strong> — your reservation deposit must be paid and cleared.</li>
+<li><strong>The deposit contract must be signed</strong> — your signed agreement must be on file with us.</li>
+</ol>
+<p>We will not initiate ear cropping coordination without both of these in place. This protects everyone involved and ensures we are not making irreversible arrangements for a placement that is not yet confirmed.</p>
+<h2>Liability and Risk: What You Need to Understand</h2>
+<p>Ear cropping is an elective cosmetic procedure. As with any surgical procedure performed under anesthesia, there are risks — including but not limited to anesthesia complications, infection, improper healing, and the ears not standing as desired.</p>
+<p><strong>All financial responsibility, medical outcomes, and results — including dissatisfaction with the appearance of the crop — are the sole responsibility of the purchaser.</strong></p>
+<p>CCR Kennels is not responsible for:</p>
+<ul>
+<li>The outcome of the procedure</li>
+<li>How the ears heal or stand</li>
+<li>Any medical complications before, during, or after surgery</li>
+<li>The veterinary clinic's pricing, availability, or scheduling</li>
+<li>Results that do not meet the buyer's aesthetic expectations</li>
+</ul>
+<p>By requesting ear cropping, you are making an informed elective choice. We facilitate the process as a service to our buyers, but the decision, the cost, and the outcome belong to you.</p>
+<h2>How to Request Ear Cropping</h2>
+<p>If you are interested in ear cropping for your CCR Kennels puppy:</p>
+<ol>
+<li><strong>Let us know at the time of reservation</strong> — the earlier the better. Do not wait.</li>
+<li><strong>Ensure your deposit is paid and your contract is signed</strong> before requesting coordination.</li>
+<li><strong>Discuss crop style preference</strong> with us so we can communicate it to the vet.</li>
+</ol>
+<p>Contact us directly at <a href="mailto:ccrkennels2022@gmail.com">ccrkennels2022@gmail.com</a> or call <a>(706) 973-7697</a> to start the conversation.</p>
+<hr>
+<p><em>Ear cropping is legal in the United States and remains a personal choice for Cane Corso owners. CCR Kennels neither pressures buyers toward nor away from this procedure. Our role is to provide accurate information, a trusted veterinary referral, and logistical support for those who choose it.</em></p>
+4:[["$","div",null,{"className":"bg-pattern"}],["$","nav",null,{"className":"navbar scrolled","style":{"position":"relative","background":"var(--overlay-dark)"},"children":[["$","$Lf",null,{"href":"/","className":"logo","children":[["$","img",null,{"src":"/images/logo.webp","alt":"CCR Kennels Logo","width":50,"height":38}],["$","div",null,{"className":"logo-text","children":[["$","span",null,{"children":"CCR Kennels"}],["$","span",null,{"children":"Italian Cane Corso"}]]}]]}],["$","$Lf",null,{"href":"/blog","className":"btn btn-primary","style":{"fontSize":"0.8rem","padding":"0.6rem 1.5rem"},"children":[["$","i",null,{"className":"fas fa-arrow-left"}]," All Articles"]}]]}],["$","main",null,{"className":"blog-post-page","children":["$","div",null,{"className":"blog-post-container","children":[["$","header",null,{"className":"blog-post-header","children":[["$","time",null,{"className":"blog-card-date","children":"March 7, 2026"}],["$","h1",null,{"children":"Ear Cropping for Cane Corsos: What You Need to Know Before You Decide"}],["$","p",null,{"className":"blog-post-description","children":"Ear cropping is an elective procedure available through CCR Kennels. Learn about the process, timeline, crop styles, cost, and how to request it before your puppy is 7 weeks old."}]]}],["$","div",null,{"className":"blog-post-body","dangerouslySetInnerHTML":{"__html":"$10"}}],"$L11"]}]}],"$L12"]
+11:["$","div",null,{"className":"blog-post-footer","children":[["$","$Lf",null,{"href":"/blog","className":"btn btn-primary","children":[["$","i",null,{"className":"fas fa-arrow-left"}]," Back to All Articles"]}],["$","$Lf",null,{"href":"/#contact","className":"btn btn-secondary","children":"Contact CCR Kennels"}]]}]
+12:["$","footer",null,{"children":["$","div",null,{"className":"footer-bottom","style":{"maxWidth":"100%","padding":"1.5rem 5%"},"children":[["$","p",null,{"children":"© 2024 CCR Kennels, LLC. All Rights Reserved."}],["$","div",null,{"className":"footer-bottom-links","children":[["$","$Lf",null,{"href":"/privacy-policy","children":"Privacy Policy"}],["$","$Lf",null,{"href":"/","children":"Home"}]]}]]}]}]
+c:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+a:null
+e:[["$","title","0",{"children":"Ear Cropping for Cane Corsos: What You Need to Know Before You Decide | CCR Kennels"}],["$","meta","1",{"name":"description","content":"Ear cropping is an elective procedure available through CCR Kennels. Learn about the process, timeline, crop styles, cost, and how to request it before your puppy is 7 weeks old."}],["$","meta","2",{"name":"keywords","content":"Cane Corso breeder Illinois, Italian Cane Corso puppies, AKC Cane Corso, Cane Corso puppies for sale, veteran owned dog breeder, Cane Corso Centralia IL, Cane Corso Southern Illinois, Italian mastiff puppies, CCR Kennels"}],["$","link","3",{"rel":"canonical","href":"https://www.ccrcorsos.com/blog/ear-cropping-cane-corso"}],["$","meta","4",{"property":"og:title","content":"Ear Cropping for Cane Corsos: What You Need to Know Before You Decide"}],["$","meta","5",{"property":"og:description","content":"Ear cropping is an elective procedure available through CCR Kennels. Learn about the process, timeline, crop styles, cost, and how to request it before your puppy is 7 weeks old."}],["$","meta","6",{"property":"og:url","content":"https://www.ccrcorsos.com/blog/ear-cropping-cane-corso"}],["$","meta","7",{"property":"og:site_name","content":"CCR Kennels"}],["$","meta","8",{"property":"og:type","content":"article"}],["$","meta","9",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","10",{"name":"twitter:title","content":"CCR Kennels | Italian Cane Corso Breeder"}],["$","meta","11",{"name":"twitter:description","content":"Veteran-owned AKC Cane Corso breeder in Southern Illinois. Champion bloodlines, DNA tested, 2-year health guarantee."}],["$","meta","12",{"name":"twitter:image","content":"https://static.wixstatic.com/media/a1daef_88d23b183c834d8087dfa25c1238b404~mv2.png"}]]
