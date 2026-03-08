@@ -697,6 +697,30 @@ section {
   margin-top: 0.3rem;
 }
 
+.gallery-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 2.5rem 0 1.5rem;
+}
+
+.gallery-section-divider::before,
+.gallery-section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(201, 162, 39, 0.25);
+}
+
+.gallery-section-divider span {
+  font-family: 'Cinzel', serif;
+  color: var(--accent-gold);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 /* Testimonials */
 .testimonials-section {
   background: var(--secondary-black);
