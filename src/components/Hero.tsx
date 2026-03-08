@@ -23,12 +23,10 @@ export default function Hero() {
         </p>
         <div className="hero-buttons">
           <a
-            href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_2afc7c66278544a69068d974a0cf995b.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/adoption-application"
             className="btn btn-primary"
           >
-            <i className="fas fa-file-alt" />
+            <i className="fas fa-paw" />
             Apply Now
           </a>
           <a href="#gallery" className="btn btn-secondary">

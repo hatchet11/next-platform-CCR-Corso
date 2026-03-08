@@ -59,13 +59,11 @@ export default function AvailablePuppies() {
           </div>
 
           <a
-            href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_2afc7c66278544a69068d974a0cf995b.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/adoption-application"
             className="btn btn-primary litter-btn"
           >
-            <i className="fas fa-file-alt" />
-            Apply Now
+            <i className="fas fa-paw" />
+            Submit Adoption Application
           </a>
         </div>
       </div>
