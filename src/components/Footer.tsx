@@ -59,11 +59,7 @@ export default function Footer() {
             <li><a href="#services">Services</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li>
-              <a
-                href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_2afc7c66278544a69068d974a0cf995b.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="/adoption-application">
                 Apply Now
               </a>
             </li>
@@ -87,17 +83,13 @@ export default function Footer() {
           <h4>Forms &amp; Documents</h4>
           <ul>
             <li>
-              <a
-                href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_2afc7c66278544a69068d974a0cf995b.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="/adoption-application">
                 Adoption Application
               </a>
             </li>
             <li>
               <a
-                href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_ce8ff670475d4df78c398010430adcbf.pdf"
+                href="/documents/purchase-agreement.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -106,7 +98,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_4b4e47c2dbb448b58a49b63f515860f6.pdf"
+                href="/documents/security-deposit.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
