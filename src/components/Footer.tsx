@@ -88,11 +88,7 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a
-                href="/documents/purchase-agreement.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="/purchase-agreement">
                 Purchase Agreement
               </a>
             </li>
