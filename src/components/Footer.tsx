@@ -97,12 +97,8 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a
-                href="/documents/security-deposit.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Security Deposit
+              <a href="/health-guarantee">
+                Health Guarantee
               </a>
             </li>
           </ul>
