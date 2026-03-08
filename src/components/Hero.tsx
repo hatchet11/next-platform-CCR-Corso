@@ -27,7 +27,7 @@ export default function Hero() {
             className="btn btn-primary"
           >
             <i className="fas fa-paw" />
-            Apply Now
+            Submit Adoption Application
           </a>
           <a href="#gallery" className="btn btn-secondary">
             <i className="fas fa-paw" />
