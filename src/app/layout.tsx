@@ -112,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 'https://www.facebook.com/people/CCR-Kennels/61550619435436/',
                 'https://www.instagram.com/ccr_kennels_of_soil/',
                 'https://www.tiktok.com/@ccr_kennels',
+                'https://www.google.com/maps?cid=15589904260015460938',
               ],
               priceRange: '$$',
               openingHours: 'Mo-Sa 08:00-18:00',
