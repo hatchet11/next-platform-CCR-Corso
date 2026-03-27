@@ -325,7 +325,10 @@ export default function AdoptionApplication() {
               <div style={{ color: '#444', fontSize: '0.78rem', fontFamily: 'Cinzel,serif' }}>{step + 1} / {STEPS.length}</div>
               {step < STEPS.length - 1
                 ? <button type="button" onClick={next} style={{ padding: '0.85rem 2.5rem', background: 'var(--accent-gold)', color: '#000', border: 'none', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '0.92rem', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.05em', transition: 'all 0.3s' }}>Continue →</button>
-                : <button type="submit" style={{ padding: '0.85rem 2.5rem', background: 'var(--accent-gold)', color: '#000', border: 'none', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '0.92rem', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>Submit Application 🐾</button>
+                : <>
+                    <div data-netlify-recaptcha="true" style={{ marginBottom: '1rem' }} />
+                    <button type="submit" style={{ padding: '0.85rem 2.5rem', background: 'var(--accent-gold)', color: '#000', border: 'none', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '0.92rem', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>Submit Application 🐾</button>
+                  </>
               }
             </div>
           </form>
