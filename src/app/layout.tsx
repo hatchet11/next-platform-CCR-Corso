@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     canonical: 'https://www.ccrcorsos.com',
   },
   verification: {
-    google: 'D6zxnPzW4pZeGmCNqu2-6KM9545rYb8i8z6uk5Z6LR8',
+    google: 'D6zxnPzW4pZeGmCNqu2-6KM9545rYb8i8z6uk5Z',
   },
 }
 
