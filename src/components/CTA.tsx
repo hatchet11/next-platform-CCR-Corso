@@ -13,13 +13,13 @@ export default function CTA() {
         </p>
         <div className="cta-buttons">
           <a
-            href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_2afc7c66278544a69068d974a0cf995b.pdf"
+            href="/adoption-application"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary btn-large"
           >
-            <i className="fas fa-file-download" />
-            Download Application
+            <i className="fas fa-file-alt" />
+            Submit Application
           </a>
           <a href="#contact" className="btn btn-secondary">
             <i className="fas fa-question-circle" />
@@ -28,7 +28,7 @@ export default function CTA() {
         </div>
         <div className="forms-grid">
           <a
-            href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_ce8ff670475d4df78c398010430adcbf.pdf"
+            href="/purchase-agreement"
             target="_blank"
             rel="noopener noreferrer"
             className="form-link"
@@ -37,7 +37,7 @@ export default function CTA() {
             <span>Purchase Agreement &amp; Health Guarantee</span>
           </a>
           <a
-            href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_4b4e47c2dbb448b58a49b63f515860f6.pdf"
+            href="/security-deposit"
             target="_blank"
             rel="noopener noreferrer"
             className="form-link"

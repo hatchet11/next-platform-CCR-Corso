@@ -6,8 +6,8 @@ const steps = [
     description:
       'Download and complete our puppy application. Tell us about yourself, your home, and your experience with dogs. This helps us ensure our puppies go to the right families.',
     action: {
-      label: 'Download Application',
-      url: 'https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_2afc7c66278544a69068d974a0cf995b.pdf',
+      label: 'Submit Application',
+      url: '/adoption-application',
     },
   },
   {
@@ -25,8 +25,8 @@ const steps = [
     description:
       'Once approved, a $500.00 non-refundable security deposit reserves your spot. No payment is accepted before approval. We accept payment via Zelle, Venmo, or cash.',
     action: {
-      label: 'Download Deposit Form',
-      url: 'https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_4b4e47c2dbb448b58a49b63f515860f6.pdf',
+      label: 'Security Deposit Form',
+      url: '/security-deposit',
     },
   },
   {
@@ -45,7 +45,7 @@ const steps = [
       'Before go-home day, we finalize your Purchase Agreement & Health Guarantee. This outlines our 2-year health warranty, care requirements, and responsibilities on both sides.',
     action: {
       label: 'Preview Agreement',
-      url: 'https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_ce8ff670475d4df78c398010430adcbf.pdf',
+      url: '/purchase-agreement',
     },
   },
   {
@@ -104,7 +104,7 @@ export default function ProcessTimeline() {
       <div className="process-cta">
         <p>Ready to get started?</p>
         <a
-          href="https://68d44440-23aa-4cf9-9540-9a5a9aa9e1f5.filesusr.com/ugd/a1daef_2afc7c66278544a69068d974a0cf995b.pdf"
+          href="/adoption-application"
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-primary btn-large"
