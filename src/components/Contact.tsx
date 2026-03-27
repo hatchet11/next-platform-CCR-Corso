@@ -112,7 +112,6 @@ export default function Contact() {
               method="POST"
               data-netlify="true"
               data-netlify-honeypot="bot-field"
-              data-netlify-recaptcha="true"
               onSubmit={handleSubmit}
             >
               {/* Netlify required hidden fields */}
@@ -161,7 +160,6 @@ export default function Contact() {
                   placeholder="Tell us about yourself and what you're looking for..."
                 />
               </div>
-              <div data-netlify-recaptcha="true" style={{ marginBottom: '1rem' }} />
               <button type="submit" className="form-submit">
                 <i className="fas fa-paper-plane" />
                 Send Message
