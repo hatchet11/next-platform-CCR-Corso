@@ -11,7 +11,7 @@
 [[headers]]
   for = "/images/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600"
 
 [[headers]]
   for = "/_next/static/*"
