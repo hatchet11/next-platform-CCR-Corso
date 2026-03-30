@@ -27,7 +27,7 @@ async function applyWatermark(input: ArrayBuffer): Promise<Buffer> {
   const watermark = await sharp(logoBuffer)
     .resize(watermarkSize, watermarkSize, { fit: 'inside' })
     .composite([{
-      input: Buffer.from([255, 255, 255, Math.round(255 * 0.15)]),
+      input: Buffer.from([255, 255, 255, Math.round(255 * 0.25)]),
       raw: { width: 1, height: 1, channels: 4 },
       tile: true,
       blend: 'dest-in',
