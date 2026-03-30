@@ -68,7 +68,7 @@ export default function Testimonials() {
       <div className="review-cta">
         <p>Happy with your CCR Kennels experience?</p>
         <a
-          href="https://www.google.com/maps?cid=15589904260015460938"
+          href="https://search.google.com/local/writereview?placeid=ChIJRcq773qidogRPA7sBnOb5vE"
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-secondary review-btn"
