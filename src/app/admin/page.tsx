@@ -204,7 +204,7 @@ export default function AdminPage() {
       const data = await res.json()
       if (data.ok) {
         alert(`Watermark applied to ${data.processed}/${data.total} photos.${data.errors?.length ? '\nErrors: ' + data.errors.join(', ') : ''}`)
-        loadAll()
+        loadData()
       } else {
         setLitterPhotoError('Re-watermark failed.')
       }
