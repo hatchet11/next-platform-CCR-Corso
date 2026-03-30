@@ -5,7 +5,6 @@ import About from '@/components/About'
 import AvailablePuppies from '@/components/AvailablePuppies'
 import Services from '@/components/Services'
 import Gallery from '@/components/Gallery'
-import Waitlist from '@/components/Waitlist'
 import ProcessTimeline from '@/components/ProcessTimeline'
 import CTA from '@/components/CTA'
 import Testimonials from '@/components/Testimonials'
@@ -28,7 +27,6 @@ export default function Home() {
       <Services />
       <Gallery />
       <ProcessTimeline />
-      <Waitlist />
       <CTA />
       <Testimonials />
       <FAQ />

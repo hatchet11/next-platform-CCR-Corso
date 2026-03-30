@@ -35,7 +35,7 @@ export default function Navbar() {
         <li><a href="#available" onClick={closeMenu}>Puppies</a></li>
         <li><a href="#gallery" onClick={closeMenu}>Gallery</a></li>
         <li><a href="#testimonials" onClick={closeMenu}>Reviews</a></li>
-        <li><a href="#waitlist" onClick={closeMenu}>Waitlist</a></li>
+        <li><a href="/adoption-application" onClick={closeMenu}>Apply Here</a></li>
         <li><a href="#faq" onClick={closeMenu}>FAQ</a></li>
         <li><a href="/blog" onClick={closeMenu}>Blog</a></li>
         <li>
