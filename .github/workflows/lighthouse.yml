@@ -1,0 +1,26 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Netlify deploy
+        run: sleep 60
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            https://www.ccrcorsos.com/
+            https://www.ccrcorsos.com/blog
+            https://www.ccrcorsos.com/adoption-application
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 1

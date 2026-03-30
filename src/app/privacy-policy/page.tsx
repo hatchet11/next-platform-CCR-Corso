@@ -31,7 +31,7 @@ export default function PrivacyPolicy() {
           <div className="policy-header">
             <span className="section-label">Legal</span>
             <h1>Privacy Policy</h1>
-            <p className="policy-date">Last updated: March 7, 2026</p>
+            <p className="policy-date">Last updated: March 30, 2026</p>
           </div>
 
           <div className="policy-body">
@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
                 CCR Kennels, LLC (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates
                 the website <strong>www.ccrcorsos.com</strong> (the &ldquo;Site&rdquo;). This Privacy
                 Policy explains how we collect, use, disclose, and safeguard your information when
-                you visit our Site or submit inquiries through our contact and waitlist forms.
+                you visit our Site or submit inquiries through our contact, application, or deposit forms.
               </p>
               <p>
                 By using our Site, you agree to the collection and use of information in accordance
@@ -52,13 +52,16 @@ export default function PrivacyPolicy() {
             <section className="policy-section">
               <h2>2. Information We Collect</h2>
               <h3>Information You Provide Directly</h3>
-              <p>When you fill out our contact form, waitlist form, or puppy application, we may collect:</p>
+              <p>When you fill out our contact form, adoption application, or security deposit form, we may collect:</p>
               <ul>
                 <li>First and last name</li>
                 <li>Email address</li>
                 <li>Phone number</li>
+                <li>Mailing address</li>
                 <li>Your message or inquiry details</li>
-                <li>Puppy preference (sex, color)</li>
+                <li>Puppy preference (sex, color, coat type)</li>
+                <li>Household and living situation information</li>
+                <li>Digital signature and date</li>
               </ul>
               <h3>Information Collected Automatically</h3>
               <p>
@@ -74,7 +77,8 @@ export default function PrivacyPolicy() {
               <p>We use the information we collect to:</p>
               <ul>
                 <li>Respond to your inquiries and questions</li>
-                <li>Process and evaluate puppy applications</li>
+                <li>Process and evaluate puppy adoption applications</li>
+                <li>Process security deposits and arrange puppy placement</li>
                 <li>Notify waitlist members of upcoming litter availability</li>
                 <li>Send litter updates, photos, and go-home information to reserved puppy families</li>
                 <li>Improve our website and user experience</li>
@@ -87,10 +91,10 @@ export default function PrivacyPolicy() {
             </section>
 
             <section className="policy-section">
-              <h2>4. Cookies &amp; Analytics</h2>
+              <h2>4. Cookies, Tracking &amp; Analytics</h2>
               <p>
-                Our Site may use cookies — small text files stored on your device — to improve
-                functionality and analyze traffic. We may use the following third-party services:
+                Our Site uses cookies and tracking technologies to improve functionality and analyze
+                traffic. We use the following third-party services:
               </p>
               <ul>
                 <li>
@@ -102,6 +106,20 @@ export default function PrivacyPolicy() {
                   </a>.
                 </li>
                 <li>
+                  <strong>Facebook Pixel (Meta Pixel)</strong> — we use the Meta Pixel to measure
+                  advertising effectiveness and build audiences for ads. The Pixel collects
+                  information about your actions on our Site (such as page views) and may associate
+                  that data with your Facebook account if you are logged in. You can manage your
+                  preferences through your{' '}
+                  <a href="https://www.facebook.com/settings?tab=ads" target="_blank" rel="noopener noreferrer">
+                    Facebook Ad Settings
+                  </a>.
+                  Meta&apos;s data policy is available at{' '}
+                  <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer">
+                    facebook.com/privacy/policy
+                  </a>.
+                </li>
+                <li>
                   <strong>Microsoft Clarity</strong> — records anonymized session data including
                   heatmaps and click patterns to help us improve the Site. Microsoft&apos;s privacy
                   policy is available at{' '}
@@ -110,8 +128,9 @@ export default function PrivacyPolicy() {
                   </a>.
                 </li>
                 <li>
-                  <strong>Netlify</strong> — our Site is hosted on Netlify, which processes form
-                  submissions on our behalf. Netlify&apos;s privacy policy is available at{' '}
+                  <strong>Netlify</strong> — our Site is hosted on Netlify, which serves our web
+                  content and stores kennel photos and updates. Netlify&apos;s privacy policy is
+                  available at{' '}
                   <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">
                     netlify.com/privacy
                   </a>.
@@ -126,17 +145,20 @@ export default function PrivacyPolicy() {
             </section>
 
             <section className="policy-section">
-              <h2>5. Form Submissions &amp; Communications</h2>
+              <h2>5. Form Submissions &amp; Email Communications</h2>
               <p>
-                When you submit a contact form, waitlist signup, or puppy application through our
-                Site, that data is transmitted to and stored by Netlify on our behalf. We use this
-                information solely to respond to your inquiry or process your application. We do not
-                use submitted information for unsolicited marketing.
+                When you submit a contact form, adoption application, or security deposit form
+                through our Site, that data is transmitted via <strong>Resend</strong> (a
+                transactional email service) directly to our inbox. Resend processes your submission
+                solely for delivery purposes and does not retain or use your data for any other
+                purpose. Resend&apos;s privacy policy is available at{' '}
+                <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+                  resend.com/legal/privacy-policy
+                </a>.
               </p>
               <p>
-                If you join our waitlist, you consent to receiving communications from CCR Kennels
-                regarding upcoming litter availability. You may opt out at any time by contacting
-                us directly.
+                We use submitted information solely to respond to your inquiry or process your
+                application. We do not use submitted information for unsolicited marketing.
               </p>
             </section>
 
@@ -144,9 +166,9 @@ export default function PrivacyPolicy() {
               <h2>6. Data Security</h2>
               <p>
                 We take reasonable precautions to protect your personal information. Our Site is
-                served over HTTPS (SSL encryption), and form data is handled by Netlify&apos;s
-                secure infrastructure. However, no method of internet transmission is 100% secure,
-                and we cannot guarantee absolute security.
+                served over HTTPS (SSL encryption) and form data is transmitted via encrypted
+                channels. However, no method of internet transmission is 100% secure, and we cannot
+                guarantee absolute security.
               </p>
             </section>
 
@@ -177,6 +199,7 @@ export default function PrivacyPolicy() {
                 <li>Request correction of inaccurate information</li>
                 <li>Request deletion of your personal data</li>
                 <li>Opt out of future communications from us</li>
+                <li>Opt out of Facebook Pixel tracking via your Facebook Ad Settings</li>
               </ul>
               <p>
                 To exercise any of these rights, contact us at{' '}
@@ -209,11 +232,14 @@ export default function PrivacyPolicy() {
 
       <footer>
         <div className="footer-bottom" style={{ maxWidth: '100%', padding: '1.5rem 5%' }}>
-          <p>&copy; 2024 CCR Kennels, LLC. All Rights Reserved.</p>
+          <p>&copy; 2026 CCR Kennels, LLC. All Rights Reserved.</p>
           <div className="footer-bottom-links">
             <Link href="/privacy-policy">Privacy Policy</Link>
             <Link href="/">Home</Link>
           </div>
+        </div>
+        <div style={{ textAlign: 'center', padding: '0.75rem', borderTop: '1px solid #1a1a1a', fontSize: '0.78rem', color: '#555' }}>
+          Site design by Hatchet — for web design inquiries please email <a href="mailto:hatchet412@proton.me" style={{ color: '#c9a227', textDecoration: 'none' }}>hatchet412@proton.me</a>
         </div>
       </footer>
     </>
