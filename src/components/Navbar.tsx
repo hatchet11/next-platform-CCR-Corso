@@ -38,6 +38,7 @@ export default function Navbar() {
         <li><a href="/adoption-application" onClick={closeMenu}>Apply Here</a></li>
         <li><a href="#faq" onClick={closeMenu}>FAQ</a></li>
         <li><a href="/blog" onClick={closeMenu}>Blog</a></li>
+        <li><a href="/spring-litter-2026.html" onClick={closeMenu} style={{ color: '#c9a227', fontWeight: 700 }}>Spring Litter</a></li>
         <li>
           <a
             href="/adoption-application"

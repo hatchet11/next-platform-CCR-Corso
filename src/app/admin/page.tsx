@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 type Photo = { id: string; caption: string; uploadedAt: string; contentType: string }
 type Update = { id: string; title: string; body: string; createdAt: string }
 type Screen = 'checking' | 'login' | 'dashboard'
-type Tab = 'photos' | 'updates'
+type Tab = 'photos' | 'updates' | 'litter'
 
 const gold = '#c9a227'
 const dark = '#0a0a0a'
@@ -13,7 +13,7 @@ const card = '#1a1a1a'
 const border = '#2a2a2a'
 
 export default function AdminPage() {
-  const [screen, setScreen] = useState<Screen>('checking')
+  const [screen, setScreen] = useState<Screen>('login')
   const [tab, setTab] = useState<Tab>('photos')
 
   // Login
@@ -30,6 +30,22 @@ export default function AdminPage() {
   const [photoError, setPhotoError] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
 
+  // Litter Photos
+  const [litterPhotos, setLitterPhotos] = useState<Photo[]>([])
+  const [litterPhotoFile, setLitterPhotoFile] = useState<File | null>(null)
+  const [litterPhotoCaption, setLitterPhotoCaption] = useState('')
+  const [litterPhotoPreview, setLitterPhotoPreview] = useState('')
+  const [litterPhotoUploading, setLitterPhotoUploading] = useState(false)
+  const [litterPhotoError, setLitterPhotoError] = useState('')
+  const litterFileRef = useRef<HTMLInputElement>(null)
+
+  // Litter Updates
+  const [litterUpdates, setLitterUpdates] = useState<Update[]>([])
+  const [litterUpdateTitle, setLitterUpdateTitle] = useState('')
+  const [litterUpdateBody, setLitterUpdateBody] = useState('')
+  const [litterUpdatePosting, setLitterUpdatePosting] = useState(false)
+  const [litterUpdateError, setLitterUpdateError] = useState('')
+
   // Updates
   const [updates, setUpdates] = useState<Update[]>([])
   const [updateTitle, setUpdateTitle] = useState('')
@@ -38,32 +54,39 @@ export default function AdminPage() {
   const [updateError, setUpdateError] = useState('')
 
   useEffect(() => {
-    fetch('/api/admin/verify').then(r => {
-      if (r.ok) { loadData(); setScreen('dashboard') }
-      else setScreen('login')
-    })
+    fetch('/api/admin/verify')
+      .then(r => { if (r.ok) { loadData(); setScreen('dashboard') } })
+      .catch(() => {})
   }, [])
 
   async function loadData() {
-    const [p, u] = await Promise.all([
+    const [p, u, lp, lu] = await Promise.all([
       fetch('/api/admin/photos').then(r => r.json()),
       fetch('/api/admin/updates').then(r => r.json()),
+      fetch('/api/admin/litter-photos').then(r => r.json()),
+      fetch('/api/admin/litter-updates').then(r => r.json()),
     ])
     setPhotos(Array.isArray(p) ? p : [])
     setUpdates(Array.isArray(u) ? u : [])
+    setLitterPhotos(Array.isArray(lp) ? lp : [])
+    setLitterUpdates(Array.isArray(lu) ? lu : [])
   }
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     setLoginLoading(true)
     setLoginError('')
-    const res = await fetch('/api/admin/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
-    })
-    if (res.ok) { loadData(); setScreen('dashboard') }
-    else setLoginError('Incorrect password.')
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
+      if (res.ok) { loadData(); setScreen('dashboard') }
+      else setLoginError('Incorrect password. Try: CCRkennels2026!')
+    } catch {
+      setLoginError('Connection error — please try again.')
+    }
     setLoginLoading(false)
   }
 
@@ -139,6 +162,71 @@ export default function AdminPage() {
     setUpdates(u => u.filter(x => x.id !== id))
   }
 
+  function handleLitterFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null
+    setLitterPhotoFile(file)
+    setLitterPhotoError('')
+    if (file) {
+      setLitterPhotoPreview(URL.createObjectURL(file))
+    } else {
+      setLitterPhotoPreview('')
+    }
+  }
+
+  async function handleLitterUpload(e: React.FormEvent) {
+    e.preventDefault()
+    if (!litterPhotoFile) { setLitterPhotoError('Please select a photo.'); return }
+    setLitterPhotoUploading(true)
+    setLitterPhotoError('')
+    const fd = new FormData()
+    fd.append('photo', litterPhotoFile)
+    fd.append('caption', litterPhotoCaption)
+    const res = await fetch('/api/admin/litter-photos', { method: 'POST', body: fd })
+    const data = await res.json()
+    if (data.ok) {
+      setLitterPhotoFile(null)
+      setLitterPhotoCaption('')
+      setLitterPhotoPreview('')
+      if (litterFileRef.current) litterFileRef.current.value = ''
+      loadData()
+    } else {
+      setLitterPhotoError(data.error || 'Upload failed.')
+    }
+    setLitterPhotoUploading(false)
+  }
+
+  async function deleteLitterPhoto(id: string) {
+    if (!confirm('Delete this litter photo?')) return
+    await fetch(`/api/admin/litter-photos/${id}`, { method: 'DELETE' })
+    setLitterPhotos(p => p.filter(x => x.id !== id))
+  }
+
+  async function handleLitterPostUpdate(e: React.FormEvent) {
+    e.preventDefault()
+    setLitterUpdatePosting(true)
+    setLitterUpdateError('')
+    const res = await fetch('/api/admin/litter-updates', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: litterUpdateTitle, body: litterUpdateBody }),
+    })
+    const data = await res.json()
+    if (data.ok) {
+      setLitterUpdateTitle('')
+      setLitterUpdateBody('')
+      loadData()
+    } else {
+      setLitterUpdateError(data.error || 'Failed to post update.')
+    }
+    setLitterUpdatePosting(false)
+  }
+
+  async function deleteLitterUpdate(id: string) {
+    if (!confirm('Delete this litter update?')) return
+    await fetch(`/api/admin/litter-updates/${id}`, { method: 'DELETE' })
+    setLitterUpdates(u => u.filter(x => x.id !== id))
+  }
+
   const inputStyle: React.CSSProperties = {
     width: '100%', padding: '10px 14px', background: dark, border: `1px solid ${border}`,
     borderRadius: '4px', color: '#fff', fontSize: '0.95rem', boxSizing: 'border-box',
@@ -152,13 +240,6 @@ export default function AdminPage() {
     borderRadius: '4px', padding: '5px 12px', cursor: 'pointer', fontSize: '0.8rem',
   }
 
-  if (screen === 'checking') {
-    return (
-      <div style={{ minHeight: '100vh', background: dark, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#555' }}>Loading...</p>
-      </div>
-    )
-  }
 
   if (screen === 'login') {
     return (
@@ -198,15 +279,18 @@ export default function AdminPage() {
 
       {/* Tabs */}
       <div style={{ borderBottom: `1px solid ${border}`, display: 'flex', padding: '0 24px' }}>
-        {(['photos', 'updates'] as Tab[]).map(t => (
-          <button key={t} onClick={() => setTab(t)} style={{
+        {([
+          { key: 'photos', label: `Photos (${photos.length})` },
+          { key: 'updates', label: `Updates (${updates.length})` },
+          { key: 'litter', label: `Spring 2026 Litter` },
+        ] as { key: Tab; label: string }[]).map(({ key, label }) => (
+          <button key={key} onClick={() => setTab(key)} style={{
             background: 'transparent', border: 'none', cursor: 'pointer', padding: '14px 20px',
             fontSize: '0.95rem', fontWeight: 600,
-            color: tab === t ? gold : '#666',
-            borderBottom: tab === t ? `2px solid ${gold}` : '2px solid transparent',
-            textTransform: 'capitalize',
+            color: tab === key ? gold : '#666',
+            borderBottom: tab === key ? `2px solid ${gold}` : '2px solid transparent',
           }}>
-            {t === 'photos' ? `Photos (${photos.length})` : `Updates (${updates.length})`}
+            {label}
           </button>
         ))}
       </div>
@@ -265,6 +349,123 @@ export default function AdminPage() {
                       </p>
                       <button onClick={() => deletePhoto(p.id)} style={btnRed}>Delete</button>
                     </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ── LITTER TAB ── */}
+        {tab === 'litter' && (
+          <>
+            <p style={{ color: '#888', fontSize: '0.85rem', marginBottom: '24px' }}>
+              Manage photos and updates for the <strong style={{ color: gold }}>Spring 2026 Litter</strong> page at{' '}
+              <a href="/spring-litter-2026.html" target="_blank" style={{ color: gold }}>/spring-litter-2026.html</a>.
+            </p>
+
+            {/* Litter Photo Upload */}
+            <div style={{ background: card, border: `1px solid ${border}`, borderRadius: '8px', padding: '24px', marginBottom: '28px' }}>
+              <h2 style={{ fontFamily: 'Cinzel, serif', color: gold, fontSize: '1rem', marginBottom: '18px' }}>Upload Litter Photo</h2>
+              <form onSubmit={handleLitterUpload} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                  <div style={{ flex: '1 1 220px' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', color: '#888', marginBottom: '6px' }}>Photo (JPG / PNG, max 5MB)</label>
+                    <input ref={litterFileRef} type="file" accept="image/*" onChange={handleLitterFileChange} style={{ ...inputStyle, padding: '8px' }} />
+                  </div>
+                  <div style={{ flex: '2 1 260px' }}>
+                    <label style={{ display: 'block', fontSize: '0.8rem', color: '#888', marginBottom: '6px' }}>Caption</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Week 3 — eyes just opened!"
+                      value={litterPhotoCaption}
+                      onChange={e => setLitterPhotoCaption(e.target.value)}
+                      style={inputStyle}
+                    />
+                  </div>
+                </div>
+                {litterPhotoPreview && (
+                  <img src={litterPhotoPreview} alt="preview" style={{ maxHeight: '180px', maxWidth: '100%', borderRadius: '4px', objectFit: 'cover' }} />
+                )}
+                {litterPhotoError && <p style={{ color: '#cf6f6f', fontSize: '0.85rem', margin: 0 }}>{litterPhotoError}</p>}
+                <button type="submit" style={{ ...btnGold, alignSelf: 'flex-start' }} disabled={litterPhotoUploading}>
+                  {litterPhotoUploading ? 'Uploading...' : 'Upload Photo'}
+                </button>
+              </form>
+            </div>
+
+            {/* Litter Photo Grid */}
+            {litterPhotos.length === 0 ? (
+              <p style={{ color: '#555', textAlign: 'center', padding: '20px 0 32px' }}>No litter photos uploaded yet.</p>
+            ) : (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px', marginBottom: '40px' }}>
+                {litterPhotos.map(p => (
+                  <div key={p.id} style={{ background: card, border: `1px solid ${border}`, borderRadius: '6px', overflow: 'hidden' }}>
+                    <img
+                      src={`/api/litter-photos/${p.id}`}
+                      alt={p.caption}
+                      style={{ width: '100%', height: '160px', objectFit: 'cover', display: 'block' }}
+                    />
+                    <div style={{ padding: '10px 12px' }}>
+                      <p style={{ fontSize: '0.85rem', color: '#ccc', margin: '0 0 4px' }}>{p.caption || <em style={{ color: '#555' }}>No caption</em>}</p>
+                      <p style={{ fontSize: '0.75rem', color: '#555', margin: '0 0 10px' }}>
+                        {new Date(p.uploadedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </p>
+                      <button onClick={() => deleteLitterPhoto(p.id)} style={btnRed}>Delete</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Litter Update Post */}
+            <div style={{ background: card, border: `1px solid ${border}`, borderRadius: '8px', padding: '24px', marginBottom: '28px' }}>
+              <h2 style={{ fontFamily: 'Cinzel, serif', color: gold, fontSize: '1rem', marginBottom: '18px' }}>Post Litter Update</h2>
+              <form onSubmit={handleLitterPostUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', color: '#888', marginBottom: '6px' }}>Title</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Puppies are 4 weeks old — reservations open!"
+                    value={litterUpdateTitle}
+                    onChange={e => setLitterUpdateTitle(e.target.value)}
+                    required
+                    style={inputStyle}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', color: '#888', marginBottom: '6px' }}>Message</label>
+                  <textarea
+                    placeholder="Share an update about the litter..."
+                    value={litterUpdateBody}
+                    onChange={e => setLitterUpdateBody(e.target.value)}
+                    required
+                    rows={4}
+                    style={{ ...inputStyle, resize: 'vertical', minHeight: '100px' }}
+                  />
+                </div>
+                {litterUpdateError && <p style={{ color: '#cf6f6f', fontSize: '0.85rem', margin: 0 }}>{litterUpdateError}</p>}
+                <button type="submit" style={{ ...btnGold, alignSelf: 'flex-start' }} disabled={litterUpdatePosting}>
+                  {litterUpdatePosting ? 'Posting...' : 'Post Update'}
+                </button>
+              </form>
+            </div>
+
+            {/* Litter Updates List */}
+            {litterUpdates.length === 0 ? (
+              <p style={{ color: '#555', textAlign: 'center', padding: '40px 0' }}>No litter updates posted yet.</p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {litterUpdates.map(u => (
+                  <div key={u.id} style={{ background: card, border: `1px solid ${border}`, borderRadius: '6px', padding: '16px 20px' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '6px' }}>
+                      <h3 style={{ fontFamily: 'Cinzel, serif', color: gold, fontSize: '0.95rem', margin: 0 }}>{u.title}</h3>
+                      <button onClick={() => deleteLitterUpdate(u.id)} style={btnRed}>Delete</button>
+                    </div>
+                    <p style={{ fontSize: '0.75rem', color: '#555', margin: '0 0 8px' }}>
+                      {new Date(u.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    </p>
+                    <p style={{ fontSize: '0.9rem', color: '#aaa', margin: 0, lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{u.body}</p>
                   </div>
                 ))}
               </div>
