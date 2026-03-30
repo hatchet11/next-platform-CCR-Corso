@@ -138,6 +138,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
           document,'script','https://connect.facebook.net/en_US/fbevents.js');
           fbq('init','935735705714975');
+          fbq('init','752404492270720');
           fbq('track','PageView');
         `}} />
         <noscript dangerouslySetInnerHTML={{ __html:
