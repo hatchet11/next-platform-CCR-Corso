@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getStore } from '@netlify/blobs'
 import { verifyAdmin } from '@/lib/admin-auth'
 import sharp from 'sharp'
-import path from 'path'
-import fs from 'fs'
+import { WATERMARK_B64 } from '@/lib/watermark-logo'
 
 type PhotoMeta = { id: string; caption: string; uploadedAt: string; contentType: string }
 type PhotoIndex = { photos: PhotoMeta[] }
@@ -18,8 +17,7 @@ async function applyWatermark(input: ArrayBuffer): Promise<Buffer> {
   const image = sharp(inputBuffer)
   const { width = 800, height = 600 } = await image.metadata()
 
-  const logoPath = path.join(process.cwd(), 'public', 'images', 'watermark-logo.jpeg')
-  const logoBuffer = fs.readFileSync(logoPath)
+  const logoBuffer = Buffer.from(WATERMARK_B64, 'base64')
 
   const watermarkSize = Math.round(width * 0.30)
   const resized = await sharp(logoBuffer)
