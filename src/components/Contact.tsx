@@ -80,7 +80,7 @@ export default function Contact() {
           </div>
           <div className="social-links">
             <a
-              href="https://www.facebook.com/people/CCR-Kennels/61550619435436/"
+              href="https://www.facebook.com/profile.php?id=128891723632940"
               target="_blank"
               rel="noopener noreferrer"
               className="social-link"

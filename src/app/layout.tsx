@@ -11,17 +11,18 @@ export const metadata: Metadata = {
   keywords:
     'Cane Corso breeder Illinois, Italian Cane Corso puppies, AKC Cane Corso, Cane Corso puppies for sale, veteran owned dog breeder, Cane Corso Centralia IL, Cane Corso Southern Illinois, Italian mastiff puppies, CCR Kennels',
   openGraph: {
-    title: 'CCR Kennels | Italian Cane Corso Breeder - Southern Illinois',
+    title: 'CCR Kennels | Italian Cane Corso Puppies — Southern Illinois',
     description:
-      'Veteran-owned AKC Cane Corso breeder in Centralia, IL. Champion bloodlines, DNA health tested, 2-year health guarantee. Nationwide shipping available.',
+      'Veteran-owned AKC Cane Corso breeder in Centralia, IL. Champion bloodlines, DNA health tested, 2-year health guarantee. Puppies available — apply now!',
     url: 'https://www.ccrcorsos.com',
     siteName: 'CCR Kennels',
     images: [
       {
-        url: 'https://static.wixstatic.com/media/a1daef_88d23b183c834d8087dfa25c1238b404~mv2.png',
+        url: 'https://www.ccrcorsos.com/images/logo.jpg',
         width: 1200,
         height: 630,
-        alt: 'CCR Kennels - Italian Cane Corso',
+        alt: 'CCR Kennels — Italian Cane Corso Breeder, Southern Illinois',
+        type: 'image/jpeg',
       },
     ],
     locale: 'en_US',
@@ -29,10 +30,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CCR Kennels | Italian Cane Corso Breeder',
+    title: 'CCR Kennels | Italian Cane Corso Puppies',
     description:
-      'Veteran-owned AKC Cane Corso breeder in Southern Illinois. Champion bloodlines, DNA tested, 2-year health guarantee.',
-    images: ['https://static.wixstatic.com/media/a1daef_88d23b183c834d8087dfa25c1238b404~mv2.png'],
+      'Veteran-owned AKC Cane Corso breeder in Southern Illinois. Champion bloodlines, DNA tested, 2-year health guarantee. Puppies available now!',
+    images: ['https://www.ccrcorsos.com/images/logo.jpg'],
   },
   alternates: {
     canonical: 'https://www.ccrcorsos.com',
@@ -115,7 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               image:
                 'https://static.wixstatic.com/media/a1daef_88d23b183c834d8087dfa25c1238b404~mv2.png',
               sameAs: [
-                'https://www.facebook.com/people/CCR-Kennels/61550619435436/',
+                'https://www.facebook.com/profile.php?id=128891723632940',
                 'https://www.instagram.com/ccr_kennels_of_soil/',
                 'https://www.tiktok.com/@ccr_kennels',
               ],
@@ -124,6 +125,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }),
           }}
         />
+
+        {/* ─── Facebook Page association ──────────────────────────────── */}
+        <meta property="fb:pages" content="128891723632940" />
 
         {/* ─── Facebook Pixel ─────────────────────────────────────────── */}
         <script dangerouslySetInnerHTML={{ __html: `
