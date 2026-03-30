@@ -9,10 +9,20 @@ export default function Waitlist() {
     e.preventDefault()
     const form = e.currentTarget
     const data = new FormData(form)
-    await fetch('/', {
+    await fetch('/api/send-form', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formType: 'Waitlist Signup',
+        signerName: data.get('name') as string,
+        signerDate: new Date().toLocaleDateString(),
+        fields: {
+          'Full Name': data.get('name') as string,
+          'Email': data.get('email') as string,
+          'Phone': data.get('phone') as string,
+          'Sex Preference': data.get('preference') as string,
+        },
+      }),
     })
     setSubmitted(true)
   }

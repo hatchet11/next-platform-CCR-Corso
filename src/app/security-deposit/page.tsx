@@ -11,10 +11,25 @@ export default function SecurityDeposit() {
     e.preventDefault()
     const form = e.currentTarget
     const data = new FormData(form)
-    await fetch('/', {
+    await fetch('/api/send-form', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formType: 'Security Deposit Request',
+        signerName: `${data.get('first-name')} ${data.get('last-name')}`,
+        signerDate: new Date().toLocaleDateString(),
+        fields: {
+          'First Name': data.get('first-name') as string,
+          'Last Name': data.get('last-name') as string,
+          'Email': data.get('email') as string,
+          'Phone': data.get('phone') as string,
+          'Litter': data.get('litter') as string,
+          'Sex Preference': data.get('sex-preference') as string,
+          'Color Preference': data.get('color-preference') as string,
+          'Payment Method': data.get('payment-method') as string,
+          'Additional Notes': data.get('notes') as string,
+        },
+      }),
     })
     setSubmitted(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })

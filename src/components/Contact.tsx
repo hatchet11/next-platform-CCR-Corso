@@ -10,10 +10,22 @@ export default function Contact() {
     const form = e.currentTarget
     const data = new FormData(form)
 
-    await fetch('/', {
+    await fetch('/api/send-form', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formType: 'Contact Form',
+        signerName: `${data.get('firstName')} ${data.get('lastName')}`,
+        signerDate: new Date().toLocaleDateString(),
+        fields: {
+          'First Name': data.get('firstName') as string,
+          'Last Name': data.get('lastName') as string,
+          'Email': data.get('email') as string,
+          'Phone': data.get('phone') as string,
+          'Interested In': data.get('interest') as string,
+          'Message': data.get('message') as string,
+        },
+      }),
     })
 
     setSubmitted(true)
