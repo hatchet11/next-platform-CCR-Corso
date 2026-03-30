@@ -54,17 +54,9 @@ export default function Waitlist() {
             </div>
           ) : (
             <form
-              name="waitlist"
-              method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
               onSubmit={handleSubmit}
               className="waitlist-form"
             >
-              <input type="hidden" name="form-name" value="waitlist" />
-              <p style={{ display: 'none' }}>
-                <input name="bot-field" />
-              </p>
               <div className="form-group">
                 <label htmlFor="wl-name">Full Name *</label>
                 <input type="text" id="wl-name" name="name" required placeholder="Jane Smith" />

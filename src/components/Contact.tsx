@@ -120,18 +120,8 @@ export default function Contact() {
           ) : (
             <form
               id="contactForm"
-              name="contact"
-              method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
               onSubmit={handleSubmit}
             >
-              {/* Netlify required hidden fields */}
-              <input type="hidden" name="form-name" value="contact" />
-              {/* Honeypot — bots fill this, humans don't see it */}
-              <p style={{ display: 'none' }}>
-                <label>Do not fill this out: <input name="bot-field" /></label>
-              </p>
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="firstName">First Name *</label>

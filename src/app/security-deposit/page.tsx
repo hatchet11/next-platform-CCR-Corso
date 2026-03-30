@@ -75,15 +75,9 @@ export default function SecurityDeposit() {
             </div>
           ) : (
             <form
-              name="security-deposit"
-              method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
               onSubmit={handleSubmit}
               style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '2rem' }}
             >
-              <input type="hidden" name="form-name" value="security-deposit" />
-              <input type="hidden" name="bot-field" />
 
               {/* Personal Info */}
               <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: '1.1rem', color: 'var(--text-primary)', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>
