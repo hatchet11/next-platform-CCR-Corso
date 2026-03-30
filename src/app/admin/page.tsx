@@ -195,6 +195,23 @@ export default function AdminPage() {
     setLitterPhotoUploading(false)
   }
 
+  async function rewatermarkLitterPhotos() {
+    if (!confirm('Re-apply watermark to all litter photos? This may take a moment.')) return
+    setLitterPhotoError('')
+    setLitterPhotoUploading(true)
+    try {
+      const res = await fetch('/api/admin/litter-photos/rewatermark', { method: 'POST' })
+      const data = await res.json()
+      if (data.ok) {
+        alert(`Watermark applied to ${data.processed}/${data.total} photos.${data.errors?.length ? '\nErrors: ' + data.errors.join(', ') : ''}`)
+        loadAll()
+      } else {
+        setLitterPhotoError('Re-watermark failed.')
+      }
+    } catch { setLitterPhotoError('Re-watermark request failed.') }
+    setLitterPhotoUploading(false)
+  }
+
   async function deleteLitterPhoto(id: string) {
     if (!confirm('Delete this litter photo?')) return
     await fetch(`/api/admin/litter-photos/${id}`, { method: 'DELETE' })
@@ -393,6 +410,12 @@ export default function AdminPage() {
                 </button>
               </form>
             </div>
+
+            {litterPhotos.length > 0 && (
+              <button onClick={rewatermarkLitterPhotos} disabled={litterPhotoUploading} style={{ ...btnGold, marginBottom: '16px' }}>
+                {litterPhotoUploading ? 'Processing...' : 'Re-Watermark All Photos'}
+              </button>
+            )}
 
             {/* Litter Photo Grid */}
             {litterPhotos.length === 0 ? (
