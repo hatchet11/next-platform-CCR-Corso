@@ -117,6 +117,9 @@ export default function Footer() {
           <a href="#contact">Contact</a>
         </div>
       </div>
+      <div style={{ textAlign: 'center', padding: '0.75rem', borderTop: '1px solid #1a1a1a', fontSize: '0.78rem', color: '#555' }}>
+        Site design by <a href="mailto:Hatch412@proton.me" style={{ color: '#777', textDecoration: 'none' }}>Hatch412@proton.me</a> — for web design inquiries please reach out.
+      </div>
     </footer>
   )
 }
