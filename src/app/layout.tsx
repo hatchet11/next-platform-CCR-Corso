@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   verification: {
-    google: 'Ysg2pyMRAghO18a_FQmN7kzChHT9lDlM5zEYixofyhY',
+    google: 'D6zxnPzW4pZeGmCNqu2-6KM9545rYb8i8z6uk5Z6LR8',
   },
   title: 'CCR Kennels | Italian Cane Corso Breeder - Southern Illinois',
   description:
