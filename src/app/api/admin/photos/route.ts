@@ -22,18 +22,21 @@ async function applyWatermark(input: ArrayBuffer): Promise<Buffer> {
   const logoPath = path.join(process.cwd(), 'public', 'images', 'logo.jpg')
   const logoBuffer = fs.readFileSync(logoPath)
 
-  // Size watermark to 20% of image width, at 15% opacity
+  // Resize logo to 20% of image width
   const watermarkSize = Math.round(width * 0.20)
-  const watermark = await sharp(logoBuffer)
+  const resized = await sharp(logoBuffer)
     .resize(watermarkSize, watermarkSize, { fit: 'inside' })
-    .composite([{
-      input: Buffer.from([255, 255, 255, Math.round(255 * 0.25)]),
-      raw: { width: 1, height: 1, channels: 4 },
-      tile: true,
-      blend: 'dest-in',
-    }])
-    .png()
+    .ensureAlpha()
     .toBuffer()
+
+  // Manually set alpha channel to 25% opacity
+  const { data, info } = await sharp(resized).raw().toBuffer({ resolveWithObject: true })
+  for (let i = 3; i < data.length; i += 4) {
+    data[i] = Math.round(data[i] * 0.25)
+  }
+  const watermark = await sharp(data, {
+    raw: { width: info.width, height: info.height, channels: 4 },
+  }).png().toBuffer()
 
   // Position: centered
   const wmMeta = await sharp(watermark).metadata()
