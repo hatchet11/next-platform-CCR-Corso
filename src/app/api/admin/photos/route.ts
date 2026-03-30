@@ -35,11 +35,10 @@ async function applyWatermark(input: ArrayBuffer): Promise<Buffer> {
     .png()
     .toBuffer()
 
-  // Position: bottom-right with 2% padding
-  const padding = Math.round(width * 0.02)
+  // Position: centered
   const wmMeta = await sharp(watermark).metadata()
-  const left = width - (wmMeta.width ?? watermarkSize) - padding
-  const top = height - (wmMeta.height ?? watermarkSize) - padding
+  const left = Math.round((width - (wmMeta.width ?? watermarkSize)) / 2)
+  const top = Math.round((height - (wmMeta.height ?? watermarkSize)) / 2)
 
   return image
     .composite([{ input: watermark, left, top, blend: 'over' }])
