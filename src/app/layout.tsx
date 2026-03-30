@@ -128,6 +128,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* ─── Facebook Page association ──────────────────────────────── */}
         <meta property="fb:pages" content="128891723632940" />
+        <meta property="fb:page_id" content="128891723632940" />
         <meta name="facebook-domain-verification" content="206912654551860" />
 
         {/* ─── Facebook Pixel ─────────────────────────────────────────── */}
