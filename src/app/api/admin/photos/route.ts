@@ -18,30 +18,36 @@ async function applyWatermark(input: ArrayBuffer): Promise<Buffer> {
   const image = sharp(inputBuffer)
   const { width = 800, height = 600 } = await image.metadata()
 
-  // Load logo
-  const logoPath = path.join(process.cwd(), 'public', 'images', 'logo.jpg')
+  // Load CCR Kennels logo
+  const logoPath = path.join(process.cwd(), 'public', 'images', 'watermark-logo.jpeg')
   const logoBuffer = fs.readFileSync(logoPath)
 
-  // Resize logo to 20% of image width
-  const watermarkSize = Math.round(width * 0.20)
+  // Resize logo to 30% of image width
+  const watermarkSize = Math.round(width * 0.30)
   const resized = await sharp(logoBuffer)
     .resize(watermarkSize, watermarkSize, { fit: 'inside' })
     .ensureAlpha()
     .toBuffer()
 
-  // Manually set alpha channel to 25% opacity
-  const { data, info } = await sharp(resized).raw().toBuffer({ resolveWithObject: true })
-  for (let i = 3; i < data.length; i += 4) {
-    data[i] = Math.round(data[i] * 0.25)
+  const resizedMeta = await sharp(resized).metadata()
+  const wmW = resizedMeta.width ?? watermarkSize
+  const wmH = resizedMeta.height ?? watermarkSize
+
+  // Remove dark background: use pixel brightness as alpha, then apply 15% opacity
+  // Dark pixels (background) → transparent; gold pixels → visible at 15%
+  const { data } = await sharp(resized).raw().toBuffer({ resolveWithObject: true })
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i], g = data[i + 1], b = data[i + 2]
+    const brightness = r * 0.299 + g * 0.587 + b * 0.114
+    data[i + 3] = Math.round((brightness / 255) * 255 * 0.15)
   }
   const watermark = await sharp(data, {
-    raw: { width: info.width, height: info.height, channels: 4 },
+    raw: { width: wmW, height: wmH, channels: 4 },
   }).png().toBuffer()
 
   // Position: centered
-  const wmMeta = await sharp(watermark).metadata()
-  const left = Math.round((width - (wmMeta.width ?? watermarkSize)) / 2)
-  const top = Math.round((height - (wmMeta.height ?? watermarkSize)) / 2)
+  const left = Math.round((width - wmW) / 2)
+  const top = Math.round((height - wmH) / 2)
 
   return image
     .composite([{ input: watermark, left, top, blend: 'over' }])
@@ -69,7 +75,7 @@ export async function POST(req: NextRequest) {
   const id = `photo-${Date.now()}`
   const arrayBuffer = await file.arrayBuffer()
 
-  // Apply CCR logo watermark at 15% opacity
+  // Apply CCR Kennels logo watermark at 15% opacity centered
   const watermarked = await applyWatermark(arrayBuffer)
 
   const store = getStore('kennel-photos')
