@@ -2,9 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  verification: {
-    google: 'D6zxnPzW4pZeGmCNqu2-6KM9545rYb8i8z6uk5Z6LR8',
-  },
   title: 'CCR Kennels | Italian Cane Corso Breeder - Southern Illinois',
   description:
     'CCR Kennels - Veteran-owned Italian Cane Corso breeder in Southern Illinois. AKC registered puppies with champion bloodlines, DNA health testing, and 2-year health guarantee.',
@@ -94,6 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'LocalBusiness',
+              '@id': 'https://www.google.com/maps?cid=15589904260015460938',
               name: 'CCR Kennels',
               description:
                 'Veteran-owned Italian Cane Corso breeder in Southern Illinois. AKC registered puppies with champion bloodlines and 2-year health guarantee.',
@@ -115,7 +113,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               },
               image:
                 'https://static.wixstatic.com/media/a1daef_88d23b183c834d8087dfa25c1238b404~mv2.png',
+              hasMap: 'https://www.google.com/maps?cid=15589904260015460938',
               sameAs: [
+                'https://www.google.com/maps?cid=15589904260015460938',
                 'https://www.facebook.com/profile.php?id=128891723632940',
                 'https://www.instagram.com/ccr_kennels_of_soil/',
                 'https://www.tiktok.com/@ccr_kennels',
