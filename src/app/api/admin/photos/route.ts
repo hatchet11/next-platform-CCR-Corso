@@ -73,14 +73,20 @@ export async function POST(req: NextRequest) {
   const id = `photo-${Date.now()}`
   const arrayBuffer = await file.arrayBuffer()
 
-  const watermarked = await applyWatermark(arrayBuffer)
+  let imageBuffer: Buffer
+  try {
+    imageBuffer = await applyWatermark(arrayBuffer)
+  } catch (err) {
+    console.error('[watermark error]', err)
+    return NextResponse.json({ ok: false, error: `Watermark failed: ${String(err)}` }, { status: 500 })
+  }
 
   const store = getStore('kennel-photos')
-  await store.set(id, watermarked, { metadata: { contentType: 'image/jpeg' } })
+  await store.set(id, imageBuffer, { metadata: { contentType: 'image/jpeg' } })
 
   const index = await getIndex(store)
   index.photos.unshift({ id, caption, uploadedAt: new Date().toISOString(), contentType: 'image/jpeg' })
   await store.setJSON('index', index)
 
-  return NextResponse.json({ ok: true, id })
+  return NextResponse.json({ ok: true, id, watermarked: true })
 }
