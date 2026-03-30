@@ -20,6 +20,20 @@ export default function Home() {
   return (
     <>
       <div className="bg-pattern" />
+      <div style={{
+        background: '#cc0000',
+        color: '#fff',
+        textAlign: 'center',
+        padding: '14px 20px',
+        fontSize: '1.1rem',
+        fontWeight: 700,
+        letterSpacing: '0.08em',
+        fontFamily: 'Cinzel, serif',
+        position: 'relative',
+        zIndex: 9999,
+      }}>
+        🐾 PUPPIES BIRTH DAY — TODAY! &nbsp;03/30/2026 &nbsp;🐾
+      </div>
       <Navbar />
       <Hero />
       <KennelUpdates />
