@@ -65,13 +65,14 @@ export default function Footer() {
             </li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="/blog">Blog</a></li>
+            <li><a href="https://marketplace.akc.org/breeder/cody-rose-172424" target="_blank" rel="noopener noreferrer">AKC Profile</a></li>
           </ul>
         </div>
 
         <div className="footer-column">
           <h4>Services</h4>
           <ul>
-            <li><a href="#services">AKC Registration</a></li>
+            <li><a href="https://marketplace.akc.org/breeder/cody-rose-172424" target="_blank" rel="noopener noreferrer">AKC Registration</a></li>
             <li><a href="#services">Health Testing</a></li>
             <li><a href="#services">Health Guarantee</a></li>
             <li><a href="#services">Nationwide Shipping</a></li>

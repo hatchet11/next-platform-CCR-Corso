@@ -2,13 +2,13 @@ export default function TrustBadges() {
   return (
     <div className="trust-section">
       <div className="trust-badges">
-        <div className="trust-badge">
+        <a className="trust-badge" href="https://marketplace.akc.org/breeder/cody-rose-172424" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
           <i className="fas fa-certificate" />
           <div className="trust-badge-text">
             <strong>AKC Registered</strong>
             <span>Champion Bloodlines</span>
           </div>
-        </div>
+        </a>
         <div className="trust-badge">
           <i className="fas fa-dna" />
           <div className="trust-badge-text">
