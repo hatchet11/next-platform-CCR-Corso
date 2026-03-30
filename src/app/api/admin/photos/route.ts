@@ -37,7 +37,7 @@ async function applyWatermark(input: ArrayBuffer): Promise<Buffer> {
   for (let i = 0; i < data.length; i += 4) {
     const r = data[i], g = data[i + 1], b = data[i + 2]
     const brightness = r * 0.299 + g * 0.587 + b * 0.114
-    data[i + 3] = Math.round((brightness / 255) * 255 * 0.20)
+    data[i + 3] = Math.round((brightness / 255) * 255 * 0.18)
   }
   const watermark = await sharp(data, {
     raw: { width: wmW, height: wmH, channels: 4 },
