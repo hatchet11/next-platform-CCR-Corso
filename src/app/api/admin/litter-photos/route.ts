@@ -74,19 +74,27 @@ export async function POST(req: NextRequest) {
   const arrayBuffer = await file.arrayBuffer()
 
   let imageBuffer: Buffer
+  let watermarked = false
   try {
     imageBuffer = await applyWatermark(arrayBuffer)
+    watermarked = true
   } catch (err) {
-    console.error('[watermark error]', err)
-    return NextResponse.json({ ok: false, error: `Watermark failed: ${String(err)}` }, { status: 500 })
+    console.error('[watermark error — saving original]', err)
+    // Save the original photo if watermarking fails
+    imageBuffer = Buffer.from(arrayBuffer)
   }
 
   const store = getStore('litter-photos')
-  await store.set(id, imageBuffer as unknown as ArrayBuffer, { metadata: { contentType: 'image/jpeg' } })
+  try {
+    await store.set(id, imageBuffer as unknown as ArrayBuffer, { metadata: { contentType: 'image/jpeg' } })
 
-  const index = await getIndex(store)
-  index.photos.unshift({ id, caption, uploadedAt: new Date().toISOString(), contentType: 'image/jpeg' })
-  await store.setJSON('index', index)
+    const index = await getIndex(store)
+    index.photos.unshift({ id, caption, uploadedAt: new Date().toISOString(), contentType: 'image/jpeg' })
+    await store.setJSON('index', index)
+  } catch (err) {
+    console.error('[blob store error]', err)
+    return NextResponse.json({ ok: false, error: `Storage failed: ${String(err)}` }, { status: 500 })
+  }
 
-  return NextResponse.json({ ok: true, id })
+  return NextResponse.json({ ok: true, id, watermarked })
 }
