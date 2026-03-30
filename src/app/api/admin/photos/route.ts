@@ -17,33 +17,32 @@ async function applyWatermark(input: ArrayBuffer): Promise<Buffer> {
   const image = sharp(inputBuffer)
   const { width = 800, height = 600 } = await image.metadata()
 
-  // Load CCR Kennels logo from embedded base64 (fs not available in Netlify serverless)
   const logoBuffer = Buffer.from(WATERMARK_B64, 'base64')
-
-  // Resize logo to 30% of image width
   const watermarkSize = Math.round(width * 0.30)
+
+  // Resize logo and decode to raw RGBA
   const resized = await sharp(logoBuffer)
     .resize(watermarkSize, watermarkSize, { fit: 'inside' })
     .ensureAlpha()
     .toBuffer()
 
-  const resizedMeta = await sharp(resized).metadata()
-  const wmW = resizedMeta.width ?? watermarkSize
-  const wmH = resizedMeta.height ?? watermarkSize
+  const { data, info } = await sharp(resized).raw().toBuffer({ resolveWithObject: true })
+  const wmW = info.width
+  const wmH = info.height
 
-  // Remove dark background: use pixel brightness as alpha, then apply 15% opacity
-  // Dark pixels (background) → transparent; gold pixels → visible at 15%
-  const { data } = await sharp(resized).raw().toBuffer({ resolveWithObject: true })
+  // Logo is gold on dark background:
+  // Dark pixels (background) → fully transparent
+  // Gold/light pixels (logo) → exactly 18% opacity
   for (let i = 0; i < data.length; i += 4) {
     const r = data[i], g = data[i + 1], b = data[i + 2]
-    const brightness = r * 0.299 + g * 0.587 + b * 0.114
-    data[i + 3] = Math.round((brightness / 255) * 255 * 0.18)
+    const isDark = r < 80 && g < 70 && b < 90
+    data[i + 3] = isDark ? 0 : Math.round(255 * 0.18)
   }
-  const watermark = await sharp(data, {
+
+  const watermark = await sharp(Buffer.from(data), {
     raw: { width: wmW, height: wmH, channels: 4 },
   }).png().toBuffer()
 
-  // Position: centered
   const left = Math.round((width - wmW) / 2)
   const top = Math.round((height - wmH) / 2)
 
@@ -73,11 +72,10 @@ export async function POST(req: NextRequest) {
   const id = `photo-${Date.now()}`
   const arrayBuffer = await file.arrayBuffer()
 
-  // Apply CCR Kennels logo watermark at 15% opacity centered
   const watermarked = await applyWatermark(arrayBuffer)
 
   const store = getStore('kennel-photos')
-  await store.set(id, watermarked.buffer as ArrayBuffer, { metadata: { contentType: 'image/jpeg' } })
+  await store.set(id, watermarked, { metadata: { contentType: 'image/jpeg' } })
 
   const index = await getIndex(store)
   index.photos.unshift({ id, caption, uploadedAt: new Date().toISOString(), contentType: 'image/jpeg' })

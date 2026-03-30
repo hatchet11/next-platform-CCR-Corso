@@ -18,24 +18,27 @@ async function applyWatermark(input: ArrayBuffer): Promise<Buffer> {
   const { width = 800, height = 600 } = await image.metadata()
 
   const logoBuffer = Buffer.from(WATERMARK_B64, 'base64')
-
   const watermarkSize = Math.round(width * 0.30)
+
   const resized = await sharp(logoBuffer)
     .resize(watermarkSize, watermarkSize, { fit: 'inside' })
     .ensureAlpha()
     .toBuffer()
 
-  const resizedMeta = await sharp(resized).metadata()
-  const wmW = resizedMeta.width ?? watermarkSize
-  const wmH = resizedMeta.height ?? watermarkSize
+  const { data, info } = await sharp(resized).raw().toBuffer({ resolveWithObject: true })
+  const wmW = info.width
+  const wmH = info.height
 
-  const { data } = await sharp(resized).raw().toBuffer({ resolveWithObject: true })
+  // Logo is gold on dark background:
+  // Dark pixels (background) → fully transparent
+  // Gold/light pixels (logo) → exactly 18% opacity
   for (let i = 0; i < data.length; i += 4) {
     const r = data[i], g = data[i + 1], b = data[i + 2]
-    const brightness = r * 0.299 + g * 0.587 + b * 0.114
-    data[i + 3] = Math.round((brightness / 255) * 255 * 0.18)
+    const isDark = r < 80 && g < 70 && b < 90
+    data[i + 3] = isDark ? 0 : Math.round(255 * 0.18)
   }
-  const watermark = await sharp(data, {
+
+  const watermark = await sharp(Buffer.from(data), {
     raw: { width: wmW, height: wmH, channels: 4 },
   }).png().toBuffer()
 
@@ -70,7 +73,7 @@ export async function POST(req: NextRequest) {
   const watermarked = await applyWatermark(arrayBuffer)
 
   const store = getStore('litter-photos')
-  await store.set(id, watermarked.buffer as ArrayBuffer, { metadata: { contentType: 'image/jpeg' } })
+  await store.set(id, watermarked, { metadata: { contentType: 'image/jpeg' } })
 
   const index = await getIndex(store)
   index.photos.unshift({ id, caption, uploadedAt: new Date().toISOString(), contentType: 'image/jpeg' })
