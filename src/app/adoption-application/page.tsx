@@ -1,389 +1,625 @@
-'use client'
+'use client';
 
-import { useState, useRef, useEffect } from 'react'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import { useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import type { SignaturePadRef } from '../../components/SignaturePad';
 
-const STEPS = [
-  { label: 'Personal Info',       icon: '👤' },
-  { label: 'Housing & Lifestyle', icon: '🏠' },
-  { label: 'Dog Experience',      icon: '🐕' },
-  { label: 'Puppy Preferences',   icon: '🐾' },
-  { label: 'Agreements',          icon: '📋' },
-  { label: 'Signature',           icon: '✍️' },
-]
+const SignaturePad = dynamic(() => import('../../components/SignaturePad'), { ssr: false });
+
+const s = {
+  page: {
+    minHeight: '100vh',
+    background: '#0a0a0a',
+    fontFamily: "'Raleway', sans-serif",
+    color: '#fff',
+    padding: '80px 20px 60px',
+  } as React.CSSProperties,
+  container: {
+    maxWidth: '800px',
+    margin: '0 auto',
+  } as React.CSSProperties,
+  header: {
+    textAlign: 'center' as const,
+    marginBottom: '48px',
+  },
+  title: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '2rem',
+    color: '#c9a227',
+    letterSpacing: '0.1em',
+    marginBottom: '8px',
+  },
+  subtitle: {
+    color: '#aaa',
+    fontSize: '0.95rem',
+  },
+  section: {
+    background: '#1a1a1a',
+    border: '1px solid #2a2a2a',
+    borderRadius: '8px',
+    padding: '28px',
+    marginBottom: '24px',
+  } as React.CSSProperties,
+  sectionTitle: {
+    fontFamily: "'Cinzel', serif",
+    fontSize: '1.05rem',
+    color: '#c9a227',
+    marginBottom: '20px',
+    paddingBottom: '10px',
+    borderBottom: '1px solid #2a2a2a',
+    letterSpacing: '0.05em',
+  },
+  grid2: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '16px',
+  } as React.CSSProperties,
+  grid1: {
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    gap: '16px',
+  } as React.CSSProperties,
+  field: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '6px',
+  },
+  label: {
+    fontSize: '0.85rem',
+    color: '#c9a227',
+    fontWeight: '600',
+    letterSpacing: '0.05em',
+    textTransform: 'uppercase' as const,
+  },
+  input: {
+    background: '#0a0a0a',
+    border: '1px solid #333',
+    borderRadius: '4px',
+    color: '#fff',
+    padding: '10px 14px',
+    fontSize: '0.95rem',
+    outline: 'none',
+    width: '100%',
+  } as React.CSSProperties,
+  textarea: {
+    background: '#0a0a0a',
+    border: '1px solid #333',
+    borderRadius: '4px',
+    color: '#fff',
+    padding: '10px 14px',
+    fontSize: '0.95rem',
+    outline: 'none',
+    width: '100%',
+    resize: 'vertical' as const,
+    minHeight: '90px',
+  } as React.CSSProperties,
+  select: {
+    background: '#0a0a0a',
+    border: '1px solid #333',
+    borderRadius: '4px',
+    color: '#fff',
+    padding: '10px 14px',
+    fontSize: '0.95rem',
+    outline: 'none',
+    width: '100%',
+  } as React.CSSProperties,
+  terms: {
+    background: '#0a0a0a',
+    border: '1px solid #333',
+    borderRadius: '4px',
+    padding: '16px',
+    fontSize: '0.85rem',
+    color: '#aaa',
+    lineHeight: '1.7',
+    maxHeight: '200px',
+    overflowY: 'auto' as const,
+    marginBottom: '16px',
+  },
+  checkRow: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '10px',
+    marginTop: '12px',
+  },
+  sigRow: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '12px',
+  },
+  clearBtn: {
+    background: 'transparent',
+    border: '1px solid #555',
+    color: '#aaa',
+    padding: '6px 16px',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '0.85rem',
+    width: 'fit-content',
+  } as React.CSSProperties,
+  submitBtn: {
+    background: 'linear-gradient(135deg, #c9a227, #a8861a)',
+    border: 'none',
+    color: '#000',
+    padding: '14px 40px',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '1rem',
+    fontWeight: '700',
+    fontFamily: "'Cinzel', serif",
+    letterSpacing: '0.05em',
+    width: '100%',
+    marginTop: '8px',
+  } as React.CSSProperties,
+  success: {
+    background: '#1a2a1a',
+    border: '1px solid #2a4a2a',
+    borderRadius: '8px',
+    padding: '32px',
+    textAlign: 'center' as const,
+    color: '#6fcf6f',
+  },
+  error: {
+    background: '#2a1a1a',
+    border: '1px solid #4a2a2a',
+    borderRadius: '4px',
+    padding: '12px 16px',
+    color: '#cf6f6f',
+    fontSize: '0.9rem',
+    marginBottom: '16px',
+  },
+};
 
 export default function AdoptionApplication() {
-  const [step, setStep]           = useState(0)
-  const [submitted, setSubmitted] = useState(false)
-  const [errors, setErrors]       = useState<Record<string, string>>({})
-  const formRef                   = useRef<HTMLFormElement>(null)
-  const canvasRef                 = useRef<HTMLCanvasElement>(null)
-  const drawing                   = useRef(false)
-  const lastPos                   = useRef<{ x: number; y: number } | null>(null)
-  const [hasSig, setHasSig]       = useState(false)
-  const [sigData, setSigData]     = useState('')
-  const [today, setToday]         = useState('')
+  const sigRef = useRef<SignaturePadRef>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const [agreed, setAgreed] = useState(false);
 
-  useEffect(() => {
-    setToday(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }))
-  }, [])
+  const [form, setForm] = useState({
+    fullName: '', dob: '', phone: '', email: '',
+    address: '', city: '', state: '', zip: '',
+    ownsRents: '', dwellingType: '', fencedYard: '', fenceHeight: '',
+    landlordAllows: '', landlordName: '', landlordPhone: '',
+    numAdults: '', hasChildren: '', childrenAges: '',
+    otherPets: '', otherPetsDetails: '',
+    ownedDogBefore: '', previousDogs: '', ownedLargeBreed: '', familiarWithCorso: '',
+    preferredSex: '', preferredColor: '', puppyPurpose: '',
+    vetName: '', vetPhone: '', refName: '', refPhone: '',
+    heardAboutUs: '', whyCorso: '', additionalInfo: '',
+  });
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')!
-    ctx.strokeStyle = '#c9a227'
-    ctx.lineWidth   = 2.5
-    ctx.lineCap     = 'round'
-    ctx.lineJoin    = 'round'
+  const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    setForm(f => ({ ...f, [k]: e.target.value }));
 
-    const getPos = (e: MouseEvent | TouchEvent) => {
-      const rect = canvas.getBoundingClientRect()
-      const scaleX = canvas.width / rect.width
-      const scaleY = canvas.height / rect.height
-      if ('touches' in e) return { x: (e.touches[0].clientX - rect.left) * scaleX, y: (e.touches[0].clientY - rect.top) * scaleY }
-      return { x: ((e as MouseEvent).clientX - rect.left) * scaleX, y: ((e as MouseEvent).clientY - rect.top) * scaleY }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    if (!agreed) { setError('Please agree to the terms before submitting.'); return; }
+    if (!sigRef.current || sigRef.current.isEmpty()) { setError('Please provide your electronic signature.'); return; }
+    const signature = sigRef.current.getSignature();
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/send-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'Adoption Application',
+          signerName: form.fullName,
+          signerDate: new Date().toLocaleDateString(),
+          signature,
+          fields: {
+            'Full Name': form.fullName,
+            'Date of Birth': form.dob,
+            'Phone': form.phone,
+            'Email': form.email,
+            'Address': form.address,
+            'City': form.city,
+            'State': form.state,
+            'ZIP': form.zip,
+            'Owns or Rents': form.ownsRents,
+            'Dwelling Type': form.dwellingType,
+            'Fenced Yard': form.fencedYard,
+            'Fence Height': form.fenceHeight,
+            'Landlord Allows Large Dogs': form.landlordAllows,
+            'Landlord Name': form.landlordName,
+            'Landlord Phone': form.landlordPhone,
+            'Number of Adults in Household': form.numAdults,
+            'Children in Household': form.hasChildren,
+            'Ages of Children': form.childrenAges,
+            'Other Pets': form.otherPets,
+            'Other Pets Details': form.otherPetsDetails,
+            'Owned a Dog Before': form.ownedDogBefore,
+            'Previous Dogs Info': form.previousDogs,
+            'Owned Large Breed': form.ownedLargeBreed,
+            'Familiar with Cane Corso': form.familiarWithCorso,
+            'Preferred Sex': form.preferredSex,
+            'Preferred Color': form.preferredColor,
+            'Puppy Purpose': form.puppyPurpose,
+            'Veterinarian Name': form.vetName,
+            'Veterinarian Phone': form.vetPhone,
+            'Personal Reference Name': form.refName,
+            'Personal Reference Phone': form.refPhone,
+            'How Did You Hear About Us': form.heardAboutUs,
+            'Why a Cane Corso': form.whyCorso,
+            'Additional Information': form.additionalInfo,
+          },
+        }),
+      });
+      if (!res.ok) throw new Error();
+      setSubmitted(true);
+    } catch {
+      setError('Submission failed. Please try again or email us directly at ccrkennels2022@gmail.com');
+    } finally {
+      setSubmitting(false);
     }
-    const onDown = (e: MouseEvent | TouchEvent) => { e.preventDefault(); drawing.current = true; lastPos.current = getPos(e) }
-    const onMove = (e: MouseEvent | TouchEvent) => {
-      if (!drawing.current || !lastPos.current) return
-      e.preventDefault()
-      const pos = getPos(e)
-      ctx.beginPath(); ctx.moveTo(lastPos.current.x, lastPos.current.y); ctx.lineTo(pos.x, pos.y); ctx.stroke()
-      lastPos.current = pos; setHasSig(true)
-    }
-    const onUp = () => { drawing.current = false; lastPos.current = null; setSigData(canvas.toDataURL()) }
+  };
 
-    canvas.addEventListener('mousedown', onDown, { passive: false })
-    canvas.addEventListener('mousemove', onMove, { passive: false })
-    canvas.addEventListener('mouseup', onUp)
-    canvas.addEventListener('mouseleave', onUp)
-    canvas.addEventListener('touchstart', onDown, { passive: false })
-    canvas.addEventListener('touchmove', onMove, { passive: false })
-    canvas.addEventListener('touchend', onUp)
-    return () => {
-      canvas.removeEventListener('mousedown', onDown); canvas.removeEventListener('mousemove', onMove)
-      canvas.removeEventListener('mouseup', onUp); canvas.removeEventListener('mouseleave', onUp)
-      canvas.removeEventListener('touchstart', onDown); canvas.removeEventListener('touchmove', onMove)
-      canvas.removeEventListener('touchend', onUp)
-    }
-  }, [])
-
-  function clearSig() {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    canvas.getContext('2d')!.clearRect(0, 0, canvas.width, canvas.height)
-    setHasSig(false); setSigData('')
-  }
-
-  function validate(s: number) {
-    const form = formRef.current
-    if (!form) return true
-    const errs: Record<string, string> = {}
-    const req = (name: string, label: string) => {
-      const el = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null
-      if (!el || !el.value.trim()) errs[name] = `${label} is required`
-    }
-    if (s === 0) { req('firstName','First name'); req('lastName','Last name'); req('dateOfBirth','Date of birth'); req('address','Address'); req('city','City'); req('state','State'); req('zip','ZIP'); req('phone','Phone'); req('email','Email') }
-    if (s === 1) { req('homeType','Housing type'); req('fencedYard','Fenced yard'); req('adultCount','Number of adults'); req('hoursAlonePerDay','Hours alone per day'); req('dogSleepLocation','Where the dog will sleep') }
-    if (s === 2) { req('ownedLargeBreed','Large breed experience'); req('exercisePlan','Exercise plan'); req('whyCaneCorso','Why a Cane Corso') }
-    if (s === 3) { req('sexPreference','Sex preference'); req('purpose','Primary purpose') }
-    if (s === 4) { ['agreeSpayNeuter','agreeNoChaining','agreeVetCare','agreeReturn','agreeResponsibility'].forEach(b => { const el = form.elements.namedItem(b) as HTMLInputElement | null; if (!el?.checked) errs[b] = 'Required' }) }
-    if (s === 5 && !hasSig) errs['signature'] = 'Please draw your signature'
-    setErrors(errs)
-    return Object.keys(errs).length === 0
-  }
-
-  function next() { if (validate(step)) { setStep(s => Math.min(s + 1, STEPS.length - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }) } }
-  function back() { setStep(s => Math.max(s - 1, 0)); window.scrollTo({ top: 0, behavior: 'smooth' }) }
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    if (!validate(step)) return
-    const form = e.currentTarget
-    const data = new FormData(form)
-    if (sigData) data.set('signature', sigData)
-    await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data as unknown as Record<string, string>).toString() })
-    setSubmitted(true)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  const E = (name: string) => errors[name]
-    ? <span style={{ color: '#e05252', fontSize: '0.78rem', display: 'block', marginTop: '0.3rem' }}>{errors[name]}</span>
-    : null
-
-  if (submitted) return (
-    <>
-      <Navbar />
-      <div style={{ minHeight: '100vh', background: 'var(--primary-black)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6rem 1rem' }}>
-        <div style={{ textAlign: 'center', maxWidth: '560px' }}>
-          <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(201,162,39,0.1)', border: '2px solid rgba(201,162,39,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem', margin: '0 auto 1.5rem' }}>🐾</div>
-          <h1 style={{ fontFamily: 'Cinzel,serif', color: 'var(--accent-gold)', marginBottom: '1rem', fontSize: '2rem' }}>Application Submitted!</h1>
-          <p style={{ color: 'var(--text-muted)', lineHeight: '1.9', marginBottom: '2rem', fontSize: '0.95rem' }}>
-            Thank you for applying to adopt a CCR Kennels Cane Corso. We have received your application and will review it carefully. Expect to hear from us at <strong style={{ color: 'var(--text-light)' }}>ccrkennels2022@gmail.com</strong> within 48–72 hours.
-          </p>
-          <a href="/" style={{ display: 'inline-block', padding: '0.9rem 2.5rem', background: 'var(--accent-gold)', color: '#000', fontFamily: 'Cinzel,serif', fontWeight: 700, textDecoration: 'none', borderRadius: '4px', letterSpacing: '0.05em' }}>
-            Return Home
-          </a>
+  if (submitted) {
+    return (
+      <>
+        <Navbar />
+        <div style={s.page}>
+          <div style={s.container}>
+            <div style={s.success}>
+              <h2 style={{ fontFamily: "'Cinzel', serif", color: '#c9a227', marginBottom: '12px' }}>Application Submitted</h2>
+              <p>Thank you, {form.fullName}! Your adoption application has been received. We will review it and respond within 24–48 hours.</p>
+            </div>
+          </div>
         </div>
-      </div>
-      <Footer />
-    </>
-  )
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
       <Navbar />
-      <div style={{ minHeight: '100vh', background: 'var(--primary-black)', padding: '6rem 1rem 4rem' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-
-          {/* ── Header ── */}
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span style={{ fontFamily: 'Cinzel,serif', color: 'var(--accent-gold)', fontSize: '0.85rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>CCR Kennels of Southern Illinois</span>
-            <h1 style={{ fontFamily: 'Cinzel,serif', fontSize: 'clamp(1.8rem,4vw,2.6rem)', margin: '0.5rem 0 1rem', color: 'var(--text-light)' }}>
-              Puppy Adoption Application
-            </h1>
-            <p style={{ color: 'var(--text-muted)', maxWidth: '580px', margin: '0 auto', lineHeight: '1.8', fontSize: '0.95rem' }}>
-              Complete all sections below to begin your journey to welcoming a CCR Kennels Cane Corso into your family. Fields marked <span style={{ color: 'var(--accent-gold)' }}>*</span> are required.
-            </p>
+      <div style={s.page}>
+        <div style={s.container}>
+          <div style={s.header}>
+            <h1 style={s.title}>Adoption Application</h1>
+            <p style={s.subtitle}>CCR Kennels — Italian Cane Corso Breeder &nbsp;|&nbsp; Centralia, IL</p>
           </div>
 
-          {/* ── Step indicators ── */}
-          <div style={{ display: 'grid', gridTemplateColumns: `repeat(${STEPS.length}, 1fr)`, gap: '0.5rem', marginBottom: '2.5rem' }}>
-            {STEPS.map((s, i) => (
-              <div key={i} style={{ textAlign: 'center' }}>
-                <div style={{
-                  width: '40px', height: '40px', borderRadius: '50%', margin: '0 auto 0.4rem',
-                  background: i < step ? 'var(--accent-gold)' : i === step ? 'rgba(201,162,39,0.15)' : 'rgba(255,255,255,0.03)',
-                  border: `2px solid ${i <= step ? 'var(--accent-gold)' : 'rgba(201,162,39,0.15)'}`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: i < step ? '1rem' : '0.85rem',
-                  color: i < step ? '#000' : i === step ? 'var(--accent-gold)' : '#444',
-                  transition: 'all 0.3s', fontWeight: 700,
-                }}>
-                  {i < step ? '✓' : s.icon}
+          <form onSubmit={handleSubmit}>
+
+            {/* Personal Information */}
+            <div style={s.section}>
+              <h2 style={s.sectionTitle}>Personal Information</h2>
+              <div style={{ ...s.grid2, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Full Name *</label>
+                  <input style={s.input} required value={form.fullName} onChange={set('fullName')} />
                 </div>
-                <div style={{ fontSize: '0.65rem', color: i === step ? 'var(--accent-gold)' : '#444', letterSpacing: '0.04em', fontFamily: 'Cinzel,serif' }}>
-                  {s.label}
+                <div style={s.field}>
+                  <label style={s.label}>Date of Birth *</label>
+                  <input style={s.input} type="date" required value={form.dob} onChange={set('dob')} />
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* progress bar */}
-          <div style={{ height: '2px', background: 'rgba(201,162,39,0.1)', borderRadius: '2px', marginBottom: '2rem' }}>
-            <div style={{ height: '100%', background: 'var(--accent-gold)', borderRadius: '2px', width: `${(step / (STEPS.length - 1)) * 100}%`, transition: 'width 0.4s ease' }} />
-          </div>
-
-          {/* ── Form ── */}
-          <form ref={formRef} name="adoption-application" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={handleSubmit}>
-            <input type="hidden" name="form-name" value="adoption-application" />
-            <input type="hidden" name="signature" value={sigData} />
-            <p style={{ display: 'none' }}><label>Do not fill: <input name="bot-field" /></label></p>
-
-            <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,162,39,0.12)', borderRadius: '12px', padding: 'clamp(1.5rem,4vw,2.5rem)', marginBottom: '1.5rem' }}>
-
-              {/* step header */}
-              <h2 style={{ fontFamily: 'Cinzel,serif', color: 'var(--accent-gold)', fontSize: '1.1rem', marginBottom: '1.75rem', paddingBottom: '0.75rem', borderBottom: '1px solid rgba(201,162,39,0.2)', letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <span style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(201,162,39,0.1)', border: '1px solid rgba(201,162,39,0.3)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>{STEPS[step].icon}</span>
-                Step {step + 1} of {STEPS.length} — {STEPS[step].label}
-              </h2>
-
-              {/* ── STEP 0: Personal Info ── */}
-              {step === 0 && <>
-                <InfoBox>We conduct a thorough review of each application to ensure our Cane Corsos are placed in the right homes. All information is kept confidential.</InfoBox>
-                <Row>
-                  <Field label="First Name *" name="firstName" err={E('firstName')} />
-                  <Field label="Last Name *" name="lastName" err={E('lastName')} />
-                </Row>
-                <Row>
-                  <Field label="Date of Birth *" name="dateOfBirth" type="date" err={E('dateOfBirth')} />
-                  <Field label="Occupation" name="occupation" />
-                </Row>
-                <Field label="Street Address *" name="address" err={E('address')} />
-                <Row>
-                  <Field label="City *" name="city" err={E('city')} />
-                  <Field label="State *" name="state" placeholder="IL" err={E('state')} />
-                  <Field label="ZIP *" name="zip" err={E('zip')} />
-                </Row>
-                <Row>
-                  <Field label="Phone Number *" name="phone" type="tel" err={E('phone')} />
-                  <Field label="Email Address *" name="email" type="email" err={E('email')} />
-                </Row>
-                <Field label="Secondary Contact (name & relationship)" name="secondaryContact" />
-              </>}
-
-              {/* ── STEP 1: Housing ── */}
-              {step === 1 && <>
-                <InfoBox>Cane Corsos are large, active dogs (90–130 lbs). A secure environment and committed daily routine are essential for this breed.</InfoBox>
-                <Select label="Type of Home *" name="homeType" err={E('homeType')} options={[['own-house','Own – House'],['rent-house','Rent – House'],['own-condo','Own – Condo/Townhouse'],['rent-condo','Rent – Condo/Townhouse'],['apartment','Apartment'],['other','Other']]} />
-                <Field label="If renting, does your landlord allow large breed dogs (90–130 lbs)?" name="landlordApproval" placeholder="N/A if you own" />
-                <Select label="Do you have a fenced yard? *" name="fencedYard" err={E('fencedYard')} options={[['yes-full','Yes – fully fenced'],['yes-partial','Yes – partially fenced'],['no','No fenced yard']]} />
-                <Field label="If fenced, fence height and type" name="fenceDetails" placeholder="e.g. 6ft wood privacy fence" />
-                <Row>
-                  <Field label="Adults in household *" name="adultCount" type="number" err={E('adultCount')} />
-                  <Field label="Children in household" name="childCount" type="number" />
-                </Row>
-                <Field label="Ages of any children" name="childAges" placeholder="e.g. 5, 9, 14 – or N/A" />
-                <Select label="Hours left alone per day *" name="hoursAlonePerDay" err={E('hoursAlonePerDay')} options={[['0-2','0–2 hours'],['2-4','2–4 hours'],['4-6','4–6 hours'],['6-8','6–8 hours'],['8+','More than 8 hours']]} />
-                <Select label="Where will the dog sleep? *" name="dogSleepLocation" err={E('dogSleepLocation')} options={[['bedroom','In the bedroom (on/near bed)'],['crate-bedroom','Crate in bedroom'],['crate-other','Crate in another room'],['indoor-free','Free roam indoors'],['outdoor','Outdoors'],['other','Other']]} />
-                <Select label="Where will the dog spend most of the day?" name="dogDayLocation" options={[['indoor-free','Free roam indoors'],['crate','In a crate'],['yard','In the yard'],['other','Other']]} />
-                <Textarea label="Describe your daily routine and how a dog fits into it" name="dailyRoutine" rows={3} />
-              </>}
-
-              {/* ── STEP 2: Dog Experience ── */}
-              {step === 2 && <>
-                <InfoBox>Cane Corsos require experienced, confident owners. Please be honest — this helps us match the right puppy temperament to your lifestyle.</InfoBox>
-                <Select label="Have you previously owned a Cane Corso?" name="ownedCaneCorso" options={[['yes','Yes'],['no','No']]} />
-                <Select label="Have you owned large breed dogs (50 lbs+)? *" name="ownedLargeBreed" err={E('ownedLargeBreed')} options={[['yes','Yes – extensive experience'],['some','Yes – some experience'],['no','No – first large breed']]} />
-                <Field label="Previous dog breeds you have owned" name="previousBreeds" placeholder="e.g. German Shepherd, Rottweiler, Labrador" />
-                <Textarea label="Current pets (type, breed, age, sex)" name="currentPets" placeholder="e.g. 1 neutered male Labrador age 4; 1 spayed female cat age 2 – or 'None'" rows={3} />
-                <Select label="Are your current pets spayed/neutered?" name="petsSterilized" options={[['all','All spayed/neutered'],['some','Some are'],['no','No'],['none','No current pets']]} />
-                <Row>
-                  <Field label="Veterinarian Name & Clinic" name="vetName" placeholder="Dr. Smith – Animal Clinic" />
-                  <Field label="Veterinarian Phone" name="vetPhone" type="tel" />
-                </Row>
-                <Textarea label="Exercise plan for the dog (1–2 hrs daily required) *" name="exercisePlan" err={E('exercisePlan')} rows={3} placeholder="e.g. Morning and evening walks, backyard play, weekend hikes..." />
-                <Textarea label="Why do you want a Cane Corso specifically? *" name="whyCaneCorso" err={E('whyCaneCorso')} rows={4} placeholder="Tell us why this breed is the right fit for your lifestyle..." />
-                <Textarea label="Any additional information you'd like us to know" name="additionalInfo" rows={3} />
-              </>}
-
-              {/* ── STEP 3: Puppy Preferences ── */}
-              {step === 3 && <>
-                <InfoBox>Let us know your preferences. We will do our best to match you with the right puppy — temperament and fit always come first.</InfoBox>
-                <Row>
-                  <Select label="Sex preference *" name="sexPreference" err={E('sexPreference')} options={[['male','Male'],['female','Female'],['no-pref','No preference']]} />
-                  <Select label="Color preference" name="colorPreference" options={[['no-pref','No preference'],['black','Black'],['gray','Gray/Blue'],['fawn','Fawn'],['brindle','Brindle'],['chocolate','Chocolate'],['other','Other']]} />
-                </Row>
-                <Row>
-                  <Select label="Ear preference" name="earPreference" options={[['natural','Natural ears'],['cropped','Cropped ears'],['no-pref','No preference']]} />
-                  <Select label="Primary purpose *" name="purpose" err={E('purpose')} options={[['companion','Family companion/pet'],['protection','Personal/family protection'],['show','Show/conformation'],['working','Working/sport'],['breeding','Future breeding (approved only)']]} />
-                </Row>
-                <Select label="Desired timeline" name="timeline" options={[['asap','As soon as possible'],['3months','Within 3 months'],['6months','Within 6 months'],['1year','Within a year'],['flexible','Flexible']]} />
-                <Textarea label="Anything specific you're looking for in a puppy (temperament, drive, energy level, etc.)" name="puppyDetails" rows={3} />
-              </>}
-
-              {/* ── STEP 4: Agreements ── */}
-              {step === 4 && <>
-                <InfoBox>Please read and agree to each condition. All five are required to complete your application.</InfoBox>
-                {[
-                  { name: 'agreeSpayNeuter', text: 'I agree to spay or neuter my puppy by 18 months of age unless a separate breeding agreement is signed with CCR Kennels.' },
-                  { name: 'agreeNoChaining', text: 'I agree never to chain, tether, or leave this dog as a permanent outdoor or guard dog. The dog will be kept as a house and family member.' },
-                  { name: 'agreeVetCare',    text: 'I agree to maintain regular veterinary care including vaccinations, annual wellness exams, and prompt medical attention when needed.' },
-                  { name: 'agreeReturn',     text: 'I agree that if I am ever unable to keep this dog, I will contact CCR Kennels FIRST and give them right of first refusal before rehoming or surrendering to a shelter.' },
-                  { name: 'agreeResponsibility', text: 'I understand a Cane Corso is a large, powerful, intelligent breed requiring experienced, consistent ownership. I accept full responsibility for the care, training, and socialization of this animal.' },
-                ].map(({ name, text }, i) => (
-                  <div key={name} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', background: errors[name] ? 'rgba(224,82,82,0.05)' : 'rgba(255,255,255,0.02)', border: `1px solid ${errors[name] ? 'rgba(224,82,82,0.4)' : 'rgba(201,162,39,0.12)'}`, borderRadius: '10px', padding: '1.1rem 1.25rem', marginBottom: '0.75rem' }}>
-                    <div style={{ minWidth: '26px', height: '26px', borderRadius: '50%', background: 'rgba(201,162,39,0.1)', border: '1px solid rgba(201,162,39,0.3)', color: 'var(--accent-gold)', fontSize: '0.72rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>{i + 1}</div>
-                    <label style={{ display: 'flex', gap: '0.75rem', cursor: 'pointer', alignItems: 'flex-start', flex: 1 }}>
-                      <input type="checkbox" name={name} value="agreed" style={{ marginTop: '3px', accentColor: 'var(--accent-gold)', width: '16px', height: '16px', flexShrink: 0 }} />
-                      <span style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: '1.7' }}>{text}</span>
-                    </label>
-                    {E(name)}
+              <div style={{ ...s.grid2, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Phone *</label>
+                  <input style={s.input} type="tel" required value={form.phone} onChange={set('phone')} />
+                </div>
+                <div style={s.field}>
+                  <label style={s.label}>Email *</label>
+                  <input style={s.input} type="email" required value={form.email} onChange={set('email')} />
+                </div>
+              </div>
+              <div style={{ ...s.grid1, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Street Address *</label>
+                  <input style={s.input} required value={form.address} onChange={set('address')} />
+                </div>
+              </div>
+              <div style={s.grid2}>
+                <div style={s.field}>
+                  <label style={s.label}>City *</label>
+                  <input style={s.input} required value={form.city} onChange={set('city')} />
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div style={s.field}>
+                    <label style={s.label}>State *</label>
+                    <input style={s.input} required value={form.state} onChange={set('state')} maxLength={2} placeholder="IL" />
                   </div>
-                ))}
-              </>}
-
-              {/* ── STEP 5: Signature ── */}
-              {step === 5 && <>
-                <InfoBox>By signing below you certify all information is accurate and complete, and that you agree to all conditions stated above.</InfoBox>
-
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <label style={LBL}>
-                    Draw Your Signature *
-                    <span style={{ fontSize: '0.75rem', color: '#555', marginLeft: '0.5rem', fontWeight: 400 }}>use mouse or finger</span>
-                  </label>
-                  <div style={{ position: 'relative', border: `2px solid ${hasSig ? 'var(--accent-gold)' : errors['signature'] ? 'rgba(224,82,82,0.6)' : 'rgba(201,162,39,0.2)'}`, borderRadius: '10px', overflow: 'hidden', background: 'rgba(255,255,255,0.02)', cursor: 'crosshair', transition: 'border-color 0.3s' }}>
-                    <canvas ref={canvasRef} width={800} height={160} style={{ display: 'block', width: '100%', height: '160px', touchAction: 'none' }} />
-                    <button type="button" onClick={clearSig} style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(0,0,0,0.7)', border: '1px solid rgba(201,162,39,0.3)', color: '#888', padding: '4px 10px', borderRadius: '4px', fontSize: '0.72rem', cursor: 'pointer', fontFamily: 'Raleway,sans-serif' }}>Clear</button>
-                    {!hasSig && <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', color: 'rgba(201,162,39,0.15)', fontFamily: 'Cinzel,serif', fontSize: '1.1rem', letterSpacing: '0.1em' }}>Sign here</div>}
+                  <div style={s.field}>
+                    <label style={s.label}>ZIP *</label>
+                    <input style={s.input} required value={form.zip} onChange={set('zip')} />
                   </div>
-                  {E('signature')}
                 </div>
-
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <label style={LBL}>Date</label>
-                  <input type="text" name="signatureDate" readOnly value={today} style={{ ...INP, background: 'rgba(201,162,39,0.04)', color: 'var(--accent-gold)', cursor: 'default' }} />
-                </div>
-
-                <div style={{ background: 'rgba(201,162,39,0.05)', border: '1px solid rgba(201,162,39,0.2)', borderRadius: '10px', padding: '1.25rem' }}>
-                  <div style={{ fontFamily: 'Cinzel,serif', color: 'var(--accent-gold)', fontSize: '0.82rem', marginBottom: '0.4rem', letterSpacing: '0.06em' }}>LEGAL NOTICE</div>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', lineHeight: '1.8', margin: 0 }}>
-                    This electronic signature is legally binding under the Electronic Signatures in Global and National Commerce Act (ESIGN) and the Uniform Electronic Transactions Act (UETA). By drawing your signature above, you agree it constitutes your legal signature on this adoption application and all agreements contained herein.
-                  </p>
-                </div>
-              </>}
-
+              </div>
             </div>
 
-            {/* ── Navigation ── */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-              <button type="button" onClick={back} disabled={step === 0} style={{ padding: '0.85rem 2rem', background: 'transparent', border: '1px solid rgba(201,162,39,0.3)', color: step === 0 ? '#333' : 'var(--accent-gold)', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '0.88rem', cursor: step === 0 ? 'default' : 'pointer', letterSpacing: '0.05em', transition: 'all 0.3s' }}>
-                ← Back
+            {/* Housing */}
+            <div style={s.section}>
+              <h2 style={s.sectionTitle}>Housing Situation</h2>
+              <div style={{ ...s.grid2, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Do you own or rent? *</label>
+                  <select style={s.select} required value={form.ownsRents} onChange={set('ownsRents')}>
+                    <option value="">Select...</option>
+                    <option>Own</option>
+                    <option>Rent</option>
+                  </select>
+                </div>
+                <div style={s.field}>
+                  <label style={s.label}>Dwelling Type *</label>
+                  <select style={s.select} required value={form.dwellingType} onChange={set('dwellingType')}>
+                    <option value="">Select...</option>
+                    <option>House</option>
+                    <option>Apartment</option>
+                    <option>Condo</option>
+                    <option>Townhouse</option>
+                    <option>Mobile Home</option>
+                    <option>Farm/Rural</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+              <div style={{ ...s.grid2, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Fenced Yard? *</label>
+                  <select style={s.select} required value={form.fencedYard} onChange={set('fencedYard')}>
+                    <option value="">Select...</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>Partial</option>
+                  </select>
+                </div>
+                <div style={s.field}>
+                  <label style={s.label}>If yes, fence height?</label>
+                  <input style={s.input} value={form.fenceHeight} onChange={set('fenceHeight')} placeholder="e.g. 6 ft privacy" />
+                </div>
+              </div>
+              <div style={{ ...s.grid2 }}>
+                <div style={s.field}>
+                  <label style={s.label}>If renting, landlord allows large dogs?</label>
+                  <select style={s.select} value={form.landlordAllows} onChange={set('landlordAllows')}>
+                    <option value="">Select...</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>N/A - I own</option>
+                  </select>
+                </div>
+              </div>
+              {form.ownsRents === 'Rent' && (
+                <div style={{ ...s.grid2, marginTop: '16px' }}>
+                  <div style={s.field}>
+                    <label style={s.label}>Landlord Name</label>
+                    <input style={s.input} value={form.landlordName} onChange={set('landlordName')} />
+                  </div>
+                  <div style={s.field}>
+                    <label style={s.label}>Landlord Phone</label>
+                    <input style={s.input} type="tel" value={form.landlordPhone} onChange={set('landlordPhone')} />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Household */}
+            <div style={s.section}>
+              <h2 style={s.sectionTitle}>Household Members</h2>
+              <div style={{ ...s.grid2, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Number of Adults *</label>
+                  <input style={s.input} type="number" min="1" required value={form.numAdults} onChange={set('numAdults')} />
+                </div>
+                <div style={s.field}>
+                  <label style={s.label}>Children in Household? *</label>
+                  <select style={s.select} required value={form.hasChildren} onChange={set('hasChildren')}>
+                    <option value="">Select...</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+              {form.hasChildren === 'Yes' && (
+                <div style={s.field}>
+                  <label style={s.label}>Ages of Children</label>
+                  <input style={s.input} value={form.childrenAges} onChange={set('childrenAges')} placeholder="e.g. 4, 7, 12" />
+                </div>
+              )}
+            </div>
+
+            {/* Other Pets */}
+            <div style={s.section}>
+              <h2 style={s.sectionTitle}>Other Pets</h2>
+              <div style={{ ...s.grid2, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Do you have other pets? *</label>
+                  <select style={s.select} required value={form.otherPets} onChange={set('otherPets')}>
+                    <option value="">Select...</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+              {form.otherPets === 'Yes' && (
+                <div style={s.field}>
+                  <label style={s.label}>Please list your pets (species, breed, age, spayed/neutered)</label>
+                  <textarea style={s.textarea} value={form.otherPetsDetails} onChange={set('otherPetsDetails')} placeholder="e.g. Dog - German Shepherd - 3 yrs - Spayed" />
+                </div>
+              )}
+            </div>
+
+            {/* Experience */}
+            <div style={s.section}>
+              <h2 style={s.sectionTitle}>Experience with Dogs</h2>
+              <div style={{ ...s.grid2, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Owned a dog before? *</label>
+                  <select style={s.select} required value={form.ownedDogBefore} onChange={set('ownedDogBefore')}>
+                    <option value="">Select...</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div style={s.field}>
+                  <label style={s.label}>Owned a large breed dog?</label>
+                  <select style={s.select} value={form.ownedLargeBreed} onChange={set('ownedLargeBreed')}>
+                    <option value="">Select...</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+              </div>
+              {form.ownedDogBefore === 'Yes' && (
+                <div style={{ ...s.field, marginBottom: '16px' }}>
+                  <label style={s.label}>Tell us about your previous dogs</label>
+                  <textarea style={s.textarea} value={form.previousDogs} onChange={set('previousDogs')} placeholder="Breed(s), what happened to them, etc." />
+                </div>
+              )}
+              <div style={s.field}>
+                <label style={s.label}>Are you familiar with the Cane Corso breed? *</label>
+                <select style={s.select} required value={form.familiarWithCorso} onChange={set('familiarWithCorso')}>
+                  <option value="">Select...</option>
+                  <option>Yes, very familiar</option>
+                  <option>Somewhat familiar</option>
+                  <option>No, still learning</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Puppy Preferences */}
+            <div style={s.section}>
+              <h2 style={s.sectionTitle}>Puppy Preferences</h2>
+              <div style={{ ...s.grid2, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Preferred Sex *</label>
+                  <select style={s.select} required value={form.preferredSex} onChange={set('preferredSex')}>
+                    <option value="">Select...</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>No Preference</option>
+                  </select>
+                </div>
+                <div style={s.field}>
+                  <label style={s.label}>Preferred Color *</label>
+                  <select style={s.select} required value={form.preferredColor} onChange={set('preferredColor')}>
+                    <option value="">Select...</option>
+                    <option>Black</option>
+                    <option>Grey / Blue</option>
+                    <option>Fawn</option>
+                    <option>Brindle</option>
+                    <option>Black Brindle</option>
+                    <option>No Preference</option>
+                  </select>
+                </div>
+              </div>
+              <div style={s.field}>
+                <label style={s.label}>Intended Purpose *</label>
+                <select style={s.select} required value={form.puppyPurpose} onChange={set('puppyPurpose')}>
+                  <option value="">Select...</option>
+                  <option>Family / Companion Pet</option>
+                  <option>Personal Protection</option>
+                  <option>Show / Conformation</option>
+                  <option>Sport / IPO / Schutzhund</option>
+                  <option>Service / Therapy</option>
+                  <option>Breeding</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            {/* References */}
+            <div style={s.section}>
+              <h2 style={s.sectionTitle}>References</h2>
+              <div style={{ ...s.grid2, marginBottom: '16px' }}>
+                <div style={s.field}>
+                  <label style={s.label}>Veterinarian Name</label>
+                  <input style={s.input} value={form.vetName} onChange={set('vetName')} />
+                </div>
+                <div style={s.field}>
+                  <label style={s.label}>Veterinarian Phone</label>
+                  <input style={s.input} type="tel" value={form.vetPhone} onChange={set('vetPhone')} />
+                </div>
+              </div>
+              <div style={s.grid2}>
+                <div style={s.field}>
+                  <label style={s.label}>Personal Reference Name</label>
+                  <input style={s.input} value={form.refName} onChange={set('refName')} />
+                </div>
+                <div style={s.field}>
+                  <label style={s.label}>Personal Reference Phone</label>
+                  <input style={s.input} type="tel" value={form.refPhone} onChange={set('refPhone')} />
+                </div>
+              </div>
+            </div>
+
+            {/* Additional */}
+            <div style={s.section}>
+              <h2 style={s.sectionTitle}>Additional Information</h2>
+              <div style={{ ...s.field, marginBottom: '16px' }}>
+                <label style={s.label}>How did you hear about CCR Kennels?</label>
+                <select style={s.select} value={form.heardAboutUs} onChange={set('heardAboutUs')}>
+                  <option value="">Select...</option>
+                  <option>Google Search</option>
+                  <option>Facebook</option>
+                  <option>Instagram</option>
+                  <option>TikTok</option>
+                  <option>Word of Mouth / Referral</option>
+                  <option>AKC Marketplace</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div style={{ ...s.field, marginBottom: '16px' }}>
+                <label style={s.label}>Why do you want a Cane Corso? *</label>
+                <textarea style={s.textarea} required value={form.whyCorso} onChange={set('whyCorso')} placeholder="Tell us about your lifestyle and why a Cane Corso is the right fit for you..." />
+              </div>
+              <div style={s.field}>
+                <label style={s.label}>Anything else you would like us to know?</label>
+                <textarea style={s.textarea} value={form.additionalInfo} onChange={set('additionalInfo')} />
+              </div>
+            </div>
+
+            {/* Agreement & Signature */}
+            <div style={s.section}>
+              <h2 style={s.sectionTitle}>Agreement & Electronic Signature</h2>
+              <div style={s.terms}>
+                <p><strong>By submitting this application, I certify that:</strong></p>
+                <br />
+                <p>1. All information provided in this application is true and accurate to the best of my knowledge.</p>
+                <p>2. I understand that submission of this application does not guarantee placement of a puppy.</p>
+                <p>3. I understand that CCR Kennels reserves the right to deny any application at their discretion.</p>
+                <p>4. I agree to provide a suitable, loving, and safe home for a CCR Kennels puppy.</p>
+                <p>5. I understand that a non-refundable $500 security deposit is required to reserve a puppy after application approval.</p>
+                <p>6. I agree to cooperate with CCR Kennels and provide any additional information requested during the review process.</p>
+                <p>7. I agree that CCR Kennels may contact my references for verification purposes.</p>
+              </div>
+              <div style={s.checkRow}>
+                <input type="checkbox" id="agree" checked={agreed} onChange={e => setAgreed(e.target.checked)} style={{ marginTop: '3px', accentColor: '#c9a227' }} />
+                <label htmlFor="agree" style={{ color: '#ccc', fontSize: '0.9rem', cursor: 'pointer' }}>
+                  I have read and agree to the terms above, and I certify all information is accurate. *
+                </label>
+              </div>
+
+              <div style={{ marginTop: '24px' }}>
+                <p style={{ ...s.label, marginBottom: '10px', display: 'block' }}>Electronic Signature *</p>
+                <p style={{ color: '#888', fontSize: '0.85rem', marginBottom: '12px' }}>Sign in the box below using your mouse or touchscreen.</p>
+                <div style={s.sigRow}>
+                  <SignaturePad ref={sigRef} />
+                  <button type="button" style={s.clearBtn} onClick={() => sigRef.current?.clear()}>Clear Signature</button>
+                </div>
+              </div>
+
+              <p style={{ color: '#888', fontSize: '0.8rem', marginTop: '16px' }}>
+                Submission Date: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+
+              {error && <div style={s.error}>{error}</div>}
+
+              <button type="submit" style={s.submitBtn} disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit Application'}
               </button>
-              <div style={{ color: '#444', fontSize: '0.78rem', fontFamily: 'Cinzel,serif' }}>{step + 1} / {STEPS.length}</div>
-              {step < STEPS.length - 1
-                ? <button type="button" onClick={next} style={{ padding: '0.85rem 2.5rem', background: 'var(--accent-gold)', color: '#000', border: 'none', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '0.92rem', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.05em', transition: 'all 0.3s' }}>Continue →</button>
-                : <button type="submit" style={{ padding: '0.85rem 2.5rem', background: 'var(--accent-gold)', color: '#000', border: 'none', borderRadius: '6px', fontFamily: 'Cinzel,serif', fontSize: '0.92rem', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>Submit Application 🐾</button>
-              }
             </div>
-          </form>
 
+          </form>
         </div>
       </div>
       <Footer />
     </>
-  )
-}
-
-/* ── Shared styles ── */
-const LBL: React.CSSProperties = { display: 'block', color: 'var(--text-muted)', fontSize: '0.82rem', marginBottom: '0.4rem', letterSpacing: '0.05em' }
-const INP: React.CSSProperties = { width: '100%', padding: '0.75rem 1rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,162,39,0.2)', borderRadius: '6px', color: 'var(--text-light)', fontSize: '0.92rem', fontFamily: 'Raleway,sans-serif', outline: 'none' }
-
-/* ── Sub-components ── */
-function InfoBox({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{ background: 'rgba(201,162,39,0.05)', border: '1px solid rgba(201,162,39,0.2)', borderRadius: '10px', padding: '1rem 1.25rem', marginBottom: '1.75rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-      <span style={{ color: 'var(--accent-gold)', fontSize: '1rem', flexShrink: 0, marginTop: '1px' }}>ℹ️</span>
-      <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: '1.7', margin: 0 }}>{children}</p>
-    </div>
-  )
-}
-
-function Row({ children }: { children: React.ReactNode }) {
-  return <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(160px,1fr))', gap: '1rem' }}>{children}</div>
-}
-
-function Field({ label, name, type = 'text', placeholder = '', err }: { label: string; name: string; type?: string; placeholder?: string; err?: React.ReactNode }) {
-  return (
-    <div style={{ marginBottom: '1.1rem' }}>
-      <label htmlFor={name} style={LBL}>{label}</label>
-      <input id={name} name={name} type={type} placeholder={placeholder} style={{ ...INP, borderColor: err ? 'rgba(224,82,82,0.5)' : 'rgba(201,162,39,0.2)' }} />
-      {err}
-    </div>
-  )
-}
-
-function Select({ label, name, options, err }: { label: string; name: string; options: [string, string][]; err?: React.ReactNode }) {
-  return (
-    <div style={{ marginBottom: '1.1rem' }}>
-      <label htmlFor={name} style={LBL}>{label}</label>
-      <select id={name} name={name} style={{ ...INP, cursor: 'pointer', borderColor: err ? 'rgba(224,82,82,0.5)' : 'rgba(201,162,39,0.2)' }}>
-        <option value="">Select…</option>
-        {options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
-      </select>
-      {err}
-    </div>
-  )
-}
-
-function Textarea({ label, name, rows = 4, placeholder = '', err }: { label: string; name: string; rows?: number; placeholder?: string; err?: React.ReactNode }) {
-  return (
-    <div style={{ marginBottom: '1.1rem' }}>
-      <label htmlFor={name} style={LBL}>{label}</label>
-      <textarea id={name} name={name} rows={rows} placeholder={placeholder} style={{ ...INP, resize: 'vertical', minHeight: `${rows * 1.6}rem`, borderColor: err ? 'rgba(224,82,82,0.5)' : 'rgba(201,162,39,0.2)' }} />
-      {err}
-    </div>
-  )
+  );
 }

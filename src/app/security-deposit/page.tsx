@@ -111,7 +111,8 @@ export default function SecurityDeposit() {
                     type="email"
                     name="email"
                     required
-                    placeholder="jane@example.com"
+                    placeholder="Email address"
+                    autoComplete="off"
                     style={{ width: '100%', padding: '0.7rem 1rem', background: 'var(--bg-primary)', border: '1px solid var(--border-color)', borderRadius: '6px', color: 'var(--text-primary)', fontSize: '0.95rem', boxSizing: 'border-box' }}
                   />
                 </div>

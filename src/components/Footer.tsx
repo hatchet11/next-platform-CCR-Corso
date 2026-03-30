@@ -117,13 +117,6 @@ export default function Footer() {
           <a href="#contact">Contact</a>
         </div>
       </div>
-      <div className="footer-credit">
-        <p>
-          Website designed by{' '}
-          <a href="mailto:Hatchet412@proton.me">Hatchet412@proton.me</a>
-          {' '}&mdash; inquiries welcome for custom web design
-        </p>
-      </div>
     </footer>
   )
 }
