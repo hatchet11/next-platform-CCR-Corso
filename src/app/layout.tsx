@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
+  verification: {
+    google: 'Ysg2pyMRAghO18a_FQmN7kzChHT9lDlM5zEYixofyhY',
+  },
   title: 'CCR Kennels | Italian Cane Corso Breeder - Southern Illinois',
   description:
     'CCR Kennels - Veteran-owned Italian Cane Corso breeder in Southern Illinois. AKC registered puppies with champion bloodlines, DNA health testing, and 2-year health guarantee.',
