@@ -20,10 +20,11 @@ async function applyWatermark(input: ArrayBuffer): Promise<Buffer> {
   const logoBuffer = Buffer.from(WATERMARK_B64, 'base64')
   const watermarkSize = Math.round(width * 0.30)
 
-  // Resize logo and decode to raw RGBA
+  // Resize logo — force PNG so we always get 4-channel RGBA (JPEG has no alpha)
   const resized = await sharp(logoBuffer)
     .resize(watermarkSize, watermarkSize, { fit: 'inside' })
     .ensureAlpha()
+    .png()
     .toBuffer()
 
   const { data, info } = await sharp(resized).raw().toBuffer({ resolveWithObject: true })
