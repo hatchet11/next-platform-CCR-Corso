@@ -1525,11 +1525,39 @@ const state = {
   photos: [],      // { id, src, caption, tag }
   queue: [],       // pending upload queue
   apps: [],        // submitted applications
-  postType: 'announcement'
+  postType: 'announcement',
+  loggedIn: false
 };
 
+// ─── ADMIN LOGIN ──────────────────────────────────────────────
+async function adminLogin() {
+  const pw = prompt('Enter admin password:');
+  if (!pw) return false;
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    if (res.ok) {
+      state.loggedIn = true;
+      return true;
+    } else {
+      alert('Incorrect password.');
+      return false;
+    }
+  } catch {
+    alert('Login failed — check your connection.');
+    return false;
+  }
+}
+
 // ─── ADMIN OPEN/CLOSE ─────────────────────────────────────────
-function openAdmin() {
+async function openAdmin() {
+  if (!state.loggedIn) {
+    const ok = await adminLogin();
+    if (!ok) return;
+  }
   document.getElementById('adminModal').classList.add('active');
   document.body.style.overflow = 'hidden';
   refreshAdminGallery();
@@ -1594,14 +1622,43 @@ function removeFromQueue(id) {
   renderQueue();
 }
 
-function publishPhotos() {
+async function publishPhotos() {
   if (!state.queue.length) { alert('No photos queued.'); return; }
-  state.photos = [...state.photos, ...state.queue.map(i => ({...i}))];
+  const statusEl = document.getElementById('uploadStatus');
+  const btn = document.querySelector('.admin-save-btn');
+  btn.disabled = true;
+  statusEl.textContent = 'Uploading...';
+
+  let uploaded = 0;
+  for (const item of state.queue) {
+    try {
+      // Convert data URL back to a File
+      const resp = await fetch(item.src);
+      const blob = await resp.blob();
+      const fd = new FormData();
+      fd.append('photo', blob, item.caption + '.jpg');
+      fd.append('caption', item.caption);
+
+      const res = await fetch('/api/admin/litter-photos', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (data.ok) {
+        state.photos.push({ id: data.id, src: '/api/litter-photos/' + data.id, caption: item.caption, tag: item.tag });
+        uploaded++;
+        statusEl.textContent = `Uploaded ${uploaded}/${state.queue.length}...`;
+      } else {
+        console.error('Upload failed:', data.error);
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+    }
+  }
+
   state.queue = [];
   renderQueue();
   renderGallery();
   refreshAdminGallery();
-  document.getElementById('uploadStatus').textContent = '✓ Published successfully';
+  btn.disabled = false;
+  statusEl.textContent = `✓ ${uploaded} photo(s) published with watermark`;
   document.getElementById('fileInput').value = '';
 }
 
@@ -1642,8 +1699,13 @@ function refreshAdminGallery() {
   `).join('');
 }
 
-function deletePhoto(id) {
+async function deletePhoto(id) {
   if (!confirm('Remove this photo from the gallery?')) return;
+  try {
+    await fetch('/api/admin/litter-photos/' + id, { method: 'DELETE' });
+  } catch (err) {
+    console.error('Delete error:', err);
+  }
   state.photos = state.photos.filter(p => String(p.id) !== String(id));
   renderGallery();
   refreshAdminGallery();

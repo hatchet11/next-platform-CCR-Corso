@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
   }
 
   const store = getStore('kennel-photos')
-  await store.set(id, imageBuffer, { metadata: { contentType: 'image/jpeg' } })
+  await store.set(id, imageBuffer.buffer as ArrayBuffer, { metadata: { contentType: 'image/jpeg' } })
 
   const index = await getIndex(store)
   index.photos.unshift({ id, caption, uploadedAt: new Date().toISOString(), contentType: 'image/jpeg' })

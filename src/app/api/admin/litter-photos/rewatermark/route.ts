@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
       if (!blob) { errors.push(`${photo.id}: not found`); continue }
 
       const watermarked = await applyWatermark(blob)
-      await store.set(photo.id, watermarked, { metadata: { contentType: 'image/jpeg' } })
+      await store.set(photo.id, watermarked.buffer as ArrayBuffer, { metadata: { contentType: 'image/jpeg' } })
       processed++
     } catch (err) {
       errors.push(`${photo.id}: ${String(err)}`)
