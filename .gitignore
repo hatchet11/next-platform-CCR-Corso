@@ -5,3 +5,6 @@ out/
 gh_2.45.0_linux_amd64/
 .env
 .env.local
+
+# Local Netlify folder
+.netlify

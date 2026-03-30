@@ -5,6 +5,7 @@ import About from '@/components/About'
 import AvailablePuppies from '@/components/AvailablePuppies'
 import Services from '@/components/Services'
 import Gallery from '@/components/Gallery'
+import KennelUpdates from '@/components/KennelUpdates'
 import ProcessTimeline from '@/components/ProcessTimeline'
 import CTA from '@/components/CTA'
 import Testimonials from '@/components/Testimonials'
@@ -21,6 +22,7 @@ export default function Home() {
       <div className="bg-pattern" />
       <Navbar />
       <Hero />
+      <KennelUpdates />
       <TrustBadges />
       <About />
       <AvailablePuppies />

@@ -6,26 +6,19 @@ redirectsOrigin = "inline"
 [functions."*"]
 
 [[plugins]]
-origin = "default"
+origin = "config"
 package = "@netlify/plugin-nextjs"
-pinned_version = "5"
-
-[plugins.inputs]
-
-[[plugins]]
-origin = "ui"
-package = "@netlify/plugin-lighthouse"
-pinned_version = "6"
 
 [plugins.inputs]
 
 [build]
-publish = "/home/hatchet/ccr-kennels/.next"
-publishOrigin = "ui"
-commandOrigin = "ui"
+publish = "C:\\Users\\Hatchet\\OneDrive\\Desktop\\ccr_kennels\\.next"
+publishOrigin = "config"
+commandOrigin = "config"
 command = "npm run build"
 
 [build.environment]
+NODE_VERSION = "20"
 
 [build.processing]
 

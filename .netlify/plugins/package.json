@@ -6,8 +6,8 @@
   "author": "Netlify",
   "license": "MIT",
   "dependencies": {
-    "@netlify/plugin-lighthouse": "6.0.1",
-    "@netlify/plugin-nextjs": "5.15.8",
-    "neon-buildhooks": "https://37fb2d91-fc5f-402b-b52c-84240e7335fa.netlify.app/packages/buildhooks.tgz"
+    "@netlify/plugin-nextjs": "5.15.9",
+    "neon-buildhooks": "https://37fb2d91-fc5f-402b-b52c-84240e7335fa.netlify.app/packages/buildhooks.tgz",
+    "prerenderio-buildhooks": "https://0789a0dd-fc2e-4712-aee5-e32716554cad.netlify.app/packages/buildhooks.tgz"
   }
 }
