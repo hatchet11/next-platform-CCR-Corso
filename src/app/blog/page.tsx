@@ -65,6 +65,9 @@ export default function BlogIndex() {
             <Link href="/">Home</Link>
           </div>
         </div>
+        <div style={{ textAlign: 'center', padding: '0.75rem', borderTop: '1px solid #1a1a1a', fontSize: '0.78rem', color: '#555' }}>
+          Site design by Hatchet — for web design inquiries please email <a href="mailto:hatchet412@proton.me" style={{ color: '#c9a227', textDecoration: 'none' }}>hatchet412@proton.me</a>
+        </div>
       </footer>
     </>
   )
