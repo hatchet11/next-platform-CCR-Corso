@@ -28,10 +28,10 @@ export async function POST(req: NextRequest) {
   if (file.size > 5 * 1024 * 1024) return NextResponse.json({ ok: false, error: 'File too large (max 5MB)' }, { status: 400 })
 
   const id = `photo-${Date.now()}`
-  const buffer = Buffer.from(await file.arrayBuffer())
+  const arrayBuffer = await file.arrayBuffer()
   const store = getStore('kennel-photos')
 
-  await store.set(id, buffer, { metadata: { contentType: file.type } })
+  await store.set(id, arrayBuffer, { metadata: { contentType: file.type } })
 
   const index = await getIndex(store)
   index.photos.unshift({ id, caption, uploadedAt: new Date().toISOString(), contentType: file.type })
