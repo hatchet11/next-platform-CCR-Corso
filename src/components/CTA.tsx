@@ -2,10 +2,6 @@ export default function CTA() {
   return (
     <section className="cta-section">
       <div className="cta-content">
-        <div className="cta-badge">
-          <i className="fas fa-clipboard-list" />
-          Start Your Journey
-        </div>
         <h2>Ready to Welcome a Corso Into Your Family?</h2>
         <p>
           Complete our adoption application to begin the process. We review all applications
