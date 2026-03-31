@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Purchase Agreement | CCR Kennels',
   description: 'CCR Kennels Purchase Agreement — terms and conditions for the purchase of an Italian Cane Corso puppy from CCR Kennels of Southern Illinois.',
+  alternates: { canonical: 'https://www.ccrcorsos.com/purchase-agreement' },
 }
 
 const sections = [

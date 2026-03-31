@@ -3,7 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CCR Kennels — Spring 2026 Litter</title>
+<title>Spring 2026 Cane Corso Litter | CCR Kennels — Centralia, IL</title>
+<meta name="description" content="Spring 2026 Italian Cane Corso litter at CCR Kennels — 12 AKC puppies (8 females, 4 males) born March 30, 2026. Dam Liberty x Sire Legion. Champion bloodlines, DNA health tested. Go-home date approximately May 25, 2026.">
+<link rel="canonical" href="https://www.ccrcorsos.com/spring-litter-2026.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Spring 2026 Cane Corso Litter | CCR Kennels">
+<meta property="og:description" content="12 AKC Italian Cane Corso puppies born March 30, 2026. Champion bloodlines, DNA health tested, 2-year health guarantee. Apply now!">
+<meta property="og:url" content="https://www.ccrcorsos.com/spring-litter-2026.html">
+<meta property="og:site_name" content="CCR Kennels">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.ccrcorsos.com/images/logo.jpg">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Spring 2026 Cane Corso Litter | CCR Kennels">
+<meta name="twitter:description" content="12 AKC Italian Cane Corso puppies born March 30, 2026. Champion bloodlines, DNA health tested.">
+<meta name="twitter:image" content="https://www.ccrcorsos.com/images/logo.jpg">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "CCR Kennels Spring 2026 Cane Corso Litter — Puppies Available",
+  "description": "A litter of 12 AKC Italian Cane Corso puppies born March 30, 2026 at CCR Kennels in Centralia, Illinois. Eight females and four males available in Black, Grey, and Brindle coat colors.",
+  "startDate": "2026-03-30",
+  "endDate": "2026-05-25",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "CCR Kennels",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1602 Woods Ln",
+      "addressLocality": "Centralia",
+      "addressRegion": "IL",
+      "postalCode": "62801",
+      "addressCountry": "US"
+    }
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "CCR Kennels",
+    "url": "https://www.ccrcorsos.com",
+    "@id": "https://www.ccrcorsos.com/#organization"
+  },
+  "url": "https://www.ccrcorsos.com/spring-litter-2026.html"
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -1116,8 +1167,8 @@ footer {
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#litter-updates">Updates</a></li>
     <li><a href="#apply">Apply</a></li>
-    <li><a href="https://ccrcorsos.com" target="_blank">Main Site</a></li>
-    <li><button class="nav-admin-btn nav-links" onclick="openAdmin()">Admin</button></li>
+    <li><a href="https://www.ccrcorsos.com" target="_blank">Main Site</a></li>
+    <li><button class="nav-admin-btn" onclick="openAdmin()">Admin</button></li>
   </ul>
 </nav>
 
@@ -1365,7 +1416,7 @@ footer {
       Spring 2026 Litter &nbsp;·&nbsp; Born March 30, 2026<br>
       Centralia, Illinois &nbsp;·&nbsp; Veteran Owned & Operated
     </div>
-    <a href="https://ccrcorsos.com" target="_blank" class="footer-link">ccrcorsos.com</a>
+    <a href="https://www.ccrcorsos.com" target="_blank" class="footer-link">ccrcorsos.com</a>
   </div>
 </footer>
 
@@ -1396,6 +1447,7 @@ footer {
 
     <div class="admin-tabs">
       <button class="admin-tab active" onclick="switchTab('photos')">📷 Photos</button>
+      <button class="admin-tab" onclick="switchTab('updates')">📝 Updates</button>
       <button class="admin-tab" onclick="switchTab('content')">✏️ Content</button>
       <button class="admin-tab" onclick="switchTab('posts')">📱 Posts</button>
       <button class="admin-tab" onclick="switchTab('applications')">📋 Applications</button>
@@ -1428,6 +1480,31 @@ footer {
         <div class="section-eyebrow" style="margin-bottom:16px;">Live Gallery</div>
         <div id="adminGalleryPreview" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;">
           <p style="color:var(--cream-mute);font-size:12px;grid-column:1/-1;">No published photos yet.</p>
+        </div>
+      </div>
+
+      <!-- TAB: UPDATES -->
+      <div class="tab-pane" id="tab-updates">
+        <div class="content-field">
+          <label class="content-label">Update Title</label>
+          <input class="content-input" type="text" id="litterUpdateTitle" placeholder="e.g. Week 2 Pupdate — Eyes Opening!">
+        </div>
+        <div class="content-field" style="margin-top:12px;">
+          <label class="content-label">Update Message</label>
+          <textarea class="content-textarea" id="litterUpdateBody" placeholder="Share what's happening with the litter..." style="min-height:120px;"></textarea>
+        </div>
+        <div class="admin-action-bar" style="margin-top:12px;">
+          <span class="admin-status" id="updatePostStatus">Ready to post</span>
+          <button class="admin-save-btn" onclick="postLitterUpdate()">Post Update</button>
+        </div>
+        <div class="divider" style="margin:32px 0 24px;">
+          <div class="div-line"></div>
+          <div class="div-mark">✦</div>
+          <div class="div-line"></div>
+        </div>
+        <div class="section-eyebrow" style="margin-bottom:16px;">Posted Updates</div>
+        <div id="adminUpdatesList" style="display:flex;flex-direction:column;gap:12px;">
+          <p style="color:var(--cream-mute);font-size:12px;">No updates posted yet.</p>
         </div>
       </div>
 
@@ -1562,6 +1639,7 @@ async function openAdmin() {
   document.body.style.overflow = 'hidden';
   refreshAdminGallery();
   refreshAppList();
+  loadLitterUpdates();
 }
 function closeAdmin() {
   document.getElementById('adminModal').classList.remove('active');
@@ -1963,6 +2041,89 @@ function exportApps() {
   a.click();
 }
 
+// ─── LITTER UPDATES ADMIN ─────────────────────────────────────
+async function postLitterUpdate() {
+  const title = document.getElementById('litterUpdateTitle').value.trim();
+  const body = document.getElementById('litterUpdateBody').value.trim();
+  if (!title || !body) { alert('Please fill in both title and message.'); return; }
+
+  const statusEl = document.getElementById('updatePostStatus');
+  statusEl.textContent = 'Posting...';
+
+  try {
+    const res = await fetch('/api/admin/litter-updates', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, body })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      document.getElementById('litterUpdateTitle').value = '';
+      document.getElementById('litterUpdateBody').value = '';
+      statusEl.textContent = '✓ Update posted';
+      await loadLitterUpdates();
+      setTimeout(function() { statusEl.textContent = 'Ready to post'; }, 2000);
+    } else {
+      statusEl.textContent = 'Failed: ' + (data.error || 'Unknown error');
+    }
+  } catch (err) {
+    statusEl.textContent = 'Post failed — check connection.';
+  }
+}
+
+async function deleteLitterUpdate(id) {
+  if (!confirm('Delete this update?')) return;
+  try {
+    await fetch('/api/admin/litter-updates/' + id, { method: 'DELETE' });
+  } catch (err) {
+    console.error('Delete error:', err);
+  }
+  await loadLitterUpdates();
+}
+
+async function loadLitterUpdates() {
+  try {
+    const res = await fetch('/api/litter-updates');
+    if (!res.ok) return;
+    const updates = await res.json();
+
+    // Update the public litter updates section
+    const list = document.getElementById('litterUpdatesList');
+    if (Array.isArray(updates) && updates.length) {
+      list.innerHTML = updates.map(u => `
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:28px 32px;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold);margin-bottom:8px;">${u.title}</div>
+          <div style="font-size:12px;color:rgba(245,237,224,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;">
+            ${new Date(u.createdAt).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
+          </div>
+          <p style="font-size:0.95rem;line-height:1.75;color:rgba(245,237,224,0.75);white-space:pre-wrap;">${u.body}</p>
+        </div>
+      `).join('');
+    } else {
+      list.innerHTML = '<p style="color:rgba(245,237,224,0.3);text-align:center;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;">No updates yet — check back soon.</p>';
+    }
+
+    // Update the admin updates list
+    const adminList = document.getElementById('adminUpdatesList');
+    if (adminList) {
+      if (Array.isArray(updates) && updates.length) {
+        adminList.innerHTML = updates.map(u => `
+          <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;padding:14px 18px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+            <div style="min-width:0;">
+              <div style="color:var(--gold);font-size:0.9rem;font-weight:600;margin-bottom:4px;">${u.title}</div>
+              <div style="font-size:11px;color:var(--cream-mute);margin-bottom:6px;">${new Date(u.createdAt).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</div>
+              <div style="font-size:0.85rem;color:rgba(245,237,224,0.6);white-space:pre-wrap;">${u.body.length > 120 ? u.body.substring(0,120) + '...' : u.body}</div>
+            </div>
+            <button onclick="deleteLitterUpdate('${u.id}')" style="background:rgba(200,70,40,0.85);border:none;color:white;font-size:11px;padding:4px 10px;cursor:pointer;white-space:nowrap;flex-shrink:0;">Delete</button>
+          </div>
+        `).join('');
+      } else {
+        adminList.innerHTML = '<p style="color:var(--cream-mute);font-size:12px;">No updates posted yet.</p>';
+      }
+    }
+  } catch (_) {}
+}
+
 // ─── LOAD FROM API ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   // Load litter photos
@@ -1983,24 +2144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (_) {}
 
   // Load litter updates
-  try {
-    const res = await fetch('/api/litter-updates');
-    if (res.ok) {
-      const updates = await res.json();
-      const list = document.getElementById('litterUpdatesList');
-      if (Array.isArray(updates) && updates.length) {
-        list.innerHTML = updates.map(u => `
-          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:28px 32px;">
-            <div style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold);margin-bottom:8px;">${u.title}</div>
-            <div style="font-size:12px;color:rgba(245,237,224,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;">
-              ${new Date(u.createdAt).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
-            </div>
-            <p style="font-size:0.95rem;line-height:1.75;color:rgba(245,237,224,0.75);white-space:pre-wrap;">${u.body}</p>
-          </div>
-        `).join('');
-      }
-    }
-  } catch (_) {}
+  await loadLitterUpdates();
 });
 
 // ─── KEYBOARD ─────────────────────────────────────────────────

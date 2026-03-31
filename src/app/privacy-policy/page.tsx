@@ -4,6 +4,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Privacy Policy | CCR Kennels',
   description: 'Privacy Policy for CCR Kennels — how we collect, use, and protect your information.',
+  alternates: { canonical: 'https://www.ccrcorsos.com/privacy-policy' },
 }
 
 export default function PrivacyPolicy() {

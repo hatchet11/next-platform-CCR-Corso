@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Health Guarantee & Contract | CCR Kennels',
   description: 'CCR Kennels Health Guarantee and Purchase Contract for Italian Cane Corso puppies. 72-hour health guarantee and 24-month congenital defect guarantee.',
+  alternates: { canonical: 'https://www.ccrcorsos.com/health-guarantee' },
 }
 
 const sections = [

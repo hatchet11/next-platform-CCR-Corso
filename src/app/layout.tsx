@@ -41,6 +41,9 @@ export const metadata: Metadata = {
   },
 }
 
+// Per-page canonical overrides prevent child pages from inheriting the root canonical.
+// Every page with its own metadata export should include alternates.canonical.
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -92,13 +95,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'LocalBusiness',
-              '@id': 'https://www.google.com/maps?cid=15589904260015460938',
+              '@id': 'https://www.ccrcorsos.com/#organization',
               name: 'CCR Kennels',
+              alternateName: 'CCR Corsos',
               description:
-                'Veteran-owned Italian Cane Corso breeder in Southern Illinois. AKC registered puppies with champion bloodlines and 2-year health guarantee.',
+                'Veteran-owned Italian Cane Corso breeder in Southern Illinois. AKC registered puppies with champion bloodlines, DNA health testing, and a 2-year health guarantee.',
               url: 'https://www.ccrcorsos.com',
               telephone: '+17069737697',
               email: 'ccrkennels2022@gmail.com',
+              founder: {
+                '@type': 'Person',
+                name: 'Cody Rose',
+                jobTitle: 'Owner & Breeder',
+                sameAs: ['https://marketplace.akc.org/breeder/cody-rose-172424'],
+              },
               address: {
                 '@type': 'PostalAddress',
                 streetAddress: '1602 Woods Ln',
@@ -112,17 +122,42 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 latitude: 38.5253,
                 longitude: -89.1334,
               },
-              image:
-                'https://static.wixstatic.com/media/a1daef_88d23b183c834d8087dfa25c1238b404~mv2.png',
+              image: 'https://www.ccrcorsos.com/images/logo.jpg',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://www.ccrcorsos.com/images/logo.jpg',
+              },
               hasMap: 'https://www.google.com/maps?cid=15589904260015460938',
               sameAs: [
                 'https://www.google.com/maps?cid=15589904260015460938',
                 'https://www.facebook.com/profile.php?id=128891723632940',
                 'https://www.instagram.com/ccr_kennels_of_soil/',
                 'https://www.tiktok.com/@ccr_kennels',
+                'https://marketplace.akc.org/breeder/cody-rose-172424',
               ],
               priceRange: '$$',
-              openingHours: 'Mo-Sa 08:00-18:00',
+              openingHoursSpecification: [
+                {
+                  '@type': 'OpeningHoursSpecification',
+                  dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                  opens: '08:00',
+                  closes: '18:00',
+                },
+              ],
+              areaServed: [
+                { '@type': 'State', name: 'Illinois' },
+                { '@type': 'Country', name: 'United States' },
+              ],
+              knowsAbout: [
+                'Cane Corso breeding',
+                'Italian Mastiff',
+                'AKC dog registration',
+                'Canine DNA health testing',
+                'Puppy socialization',
+              ],
+              slogan: 'Veteran-Owned. Champion Bloodlines. Family Raised.',
+              paymentAccepted: 'Cash, Venmo, Zelle',
+              currenciesAccepted: 'USD',
             }),
           }}
         />

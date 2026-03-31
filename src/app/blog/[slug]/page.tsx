@@ -35,8 +35,62 @@ export default async function BlogPost({
   const { slug } = await params
   const post = await getPostBySlug(slug)
 
+  const blogPostingSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    url: `https://www.ccrcorsos.com/blog/${slug}`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://www.ccrcorsos.com/blog/${slug}`,
+    },
+    author: {
+      '@type': 'Person',
+      name: 'Cody Rose',
+      jobTitle: 'Owner & Breeder at CCR Kennels',
+      sameAs: ['https://marketplace.akc.org/breeder/cody-rose-172424'],
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'CCR Kennels',
+      url: 'https://www.ccrcorsos.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.ccrcorsos.com/images/logo.jpg',
+      },
+    },
+    datePublished: post.date,
+    dateModified: post.date,
+    image: 'https://www.ccrcorsos.com/images/logo.jpg',
+    articleSection: 'Cane Corso',
+    inLanguage: 'en-US',
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', '.blog-post-description'],
+    },
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.ccrcorsos.com' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.ccrcorsos.com/blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://www.ccrcorsos.com/blog/${slug}` },
+    ],
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="bg-pattern" />
       <nav className="navbar scrolled" style={{ position: 'relative', background: 'var(--overlay-dark)' }}>
         <Link href="/" className="logo">
@@ -63,6 +117,9 @@ export default async function BlogPost({
             </time>
             <h1>{post.title}</h1>
             <p className="blog-post-description">{post.description}</p>
+            <p style={{ fontSize: '0.85rem', color: '#c9a227', marginTop: '0.5rem', fontStyle: 'italic' }}>
+              By Cody Rose — Owner &amp; Breeder, CCR Kennels
+            </p>
           </header>
           <div
             className="blog-post-body"
