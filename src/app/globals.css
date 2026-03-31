@@ -1500,6 +1500,16 @@ footer {
   font-size: 1.2rem;
 }
 
+.floating-btn.telegram {
+  background: #0088cc;
+  color: #fff;
+}
+
+.floating-btn.telegram:hover {
+  background: #006daa;
+  transform: translateX(5px);
+}
+
 .floating-btn.whatsapp {
   background: #25d366;
   color: #fff;
