@@ -3,7 +3,7 @@ export default function Footer() {
     <footer>
       <div className="footer-main">
         <div className="footer-brand">
-          <a href="#" className="logo">
+          <a href="/" className="logo">
             <img
               src="/images/logo.webp"
               alt="CCR Kennels Logo"
@@ -54,16 +54,16 @@ export default function Footer() {
         <div className="footer-column">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="/#home">Home</a></li>
+            <li><a href="/#about">About Us</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/#gallery">Gallery</a></li>
             <li>
               <a href="/adoption-application">
                 Apply Now
               </a>
             </li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="/#contact">Contact</a></li>
             <li><a href="/blog">Blog</a></li>
             <li><a href="https://marketplace.akc.org/breeder/cody-rose-172424" target="_blank" rel="noopener noreferrer">AKC Profile</a></li>
           </ul>
@@ -73,10 +73,10 @@ export default function Footer() {
           <h4>Services</h4>
           <ul>
             <li><a href="https://marketplace.akc.org/breeder/cody-rose-172424" target="_blank" rel="noopener noreferrer">AKC Registration</a></li>
-            <li><a href="#services">Health Testing</a></li>
-            <li><a href="#services">Health Guarantee</a></li>
-            <li><a href="#services">Nationwide Shipping</a></li>
-            <li><a href="#services">Breeder Support</a></li>
+            <li><a href="/#services">Health Testing</a></li>
+            <li><a href="/#services">Health Guarantee</a></li>
+            <li><a href="/#services">Nationwide Shipping</a></li>
+            <li><a href="/#services">Breeder Support</a></li>
           </ul>
         </div>
 
@@ -112,10 +112,10 @@ export default function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; 2024 CCR Kennels, LLC. All Rights Reserved.</p>
+        <p>&copy; 2026 CCR Kennels, LLC. All Rights Reserved.</p>
         <div className="footer-bottom-links">
           <a href="/privacy-policy">Privacy Policy</a>
-          <a href="#contact">Contact</a>
+          <a href="/#contact">Contact</a>
         </div>
       </div>
       <div style={{ textAlign: 'center', padding: '0.75rem', borderTop: '1px solid #1a1a1a', fontSize: '0.78rem', color: '#555' }}>

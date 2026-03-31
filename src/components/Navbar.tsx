@@ -16,7 +16,7 @@ export default function Navbar() {
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} id="navbar">
-      <a href="#" className="logo">
+      <a href="/" className="logo">
         <img
           src="/images/logo.webp"
           alt="CCR Kennels Logo"
@@ -30,13 +30,13 @@ export default function Navbar() {
       </a>
 
       <ul className={`nav-links ${menuOpen ? 'active' : ''}`} id="navLinks">
-        <li><a href="#home" onClick={closeMenu}>Home</a></li>
-        <li><a href="#about" onClick={closeMenu}>About</a></li>
-        <li><a href="#available" onClick={closeMenu}>Puppies</a></li>
-        <li><a href="#gallery" onClick={closeMenu}>Gallery</a></li>
-        <li><a href="#testimonials" onClick={closeMenu}>Reviews</a></li>
+        <li><a href="/#home" onClick={closeMenu}>Home</a></li>
+        <li><a href="/#about" onClick={closeMenu}>About</a></li>
+        <li><a href="/#available" onClick={closeMenu}>Puppies</a></li>
+        <li><a href="/#gallery" onClick={closeMenu}>Gallery</a></li>
+        <li><a href="/#testimonials" onClick={closeMenu}>Reviews</a></li>
         <li><a href="/adoption-application" onClick={closeMenu}>Apply Here</a></li>
-        <li><a href="#faq" onClick={closeMenu}>FAQ</a></li>
+        <li><a href="/#faq" onClick={closeMenu}>FAQ</a></li>
         <li><a href="/blog" onClick={closeMenu}>Blog</a></li>
         <li><a href="/spring-litter-2026.html" onClick={closeMenu} style={{ color: '#c9a227', fontWeight: 700 }}>Spring Litter</a></li>
         <li>

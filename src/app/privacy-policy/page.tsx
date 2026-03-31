@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | CCR Kennels',
@@ -231,18 +232,7 @@ export default function PrivacyPolicy() {
         </div>
       </main>
 
-      <footer>
-        <div className="footer-bottom" style={{ maxWidth: '100%', padding: '1.5rem 5%' }}>
-          <p>&copy; 2026 CCR Kennels, LLC. All Rights Reserved.</p>
-          <div className="footer-bottom-links">
-            <Link href="/privacy-policy">Privacy Policy</Link>
-            <Link href="/">Home</Link>
-          </div>
-        </div>
-        <div style={{ textAlign: 'center', padding: '0.75rem', borderTop: '1px solid #1a1a1a', fontSize: '0.78rem', color: '#555' }}>
-          Site design by Hatchet — for web design inquiries please email <a href="mailto:hatchet412@proton.me" style={{ color: '#c9a227', textDecoration: 'none' }}>hatchet412@proton.me</a>
-        </div>
-      </footer>
+      <Footer />
     </>
   )
 }
