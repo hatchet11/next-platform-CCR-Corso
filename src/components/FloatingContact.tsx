@@ -13,7 +13,7 @@ export default function FloatingContact() {
   return (
     <div className={`floating-contact ${visible ? 'visible' : ''}`}>
       <a
-        href="https://wa.me/17069737697?text=Hi%20CCR%20Kennels!%20I%27m%20interested%20in%20a%20Cane%20Corso%20puppy."
+        href="https://whatsapp.com/channel/0029Vb7sKhQKWEKzTmBqqi2h"
         target="_blank"
         rel="noopener noreferrer"
         className="floating-btn whatsapp"
