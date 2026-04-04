@@ -15,7 +15,7 @@ export default function AvailablePuppies() {
           <div className="litter-header">
             <div className="litter-status">
               <span className="status-dot dot-waitlist" />
-              <span className="status-badge badge-waitlist">Accepting Reservations Now</span>
+              <span className="status-badge badge-waitlist">Born — Accepting Reservations</span>
             </div>
             <div className="litter-deposit-badge">
               <span className="detail-label">Security Deposit</span>
@@ -35,18 +35,18 @@ export default function AvailablePuppies() {
               <span className="detail-value">Legion</span>
             </div>
             <div className="litter-detail">
-              <span className="detail-label">Expected Born</span>
-              <span className="detail-value">Early April 2026</span>
+              <span className="detail-label">Born</span>
+              <span className="detail-value">March 30, 2026</span>
             </div>
             <div className="litter-detail">
               <span className="detail-label">Go-Home Date</span>
-              <span className="detail-value">Early June 2026</span>
+              <span className="detail-value">Late May 2026</span>
             </div>
           </div>
 
           <p className="litter-desc">
-            Liberty &amp; Legion&apos;s upcoming litter is expected early April 2026 and will be
-            ready for their forever homes 8 weeks later in early June. Reserve your puppy now
+            Liberty &amp; Legion&apos;s Spring 2026 litter was born March 30, 2026! These pups will be
+            ready for their forever homes 8 weeks later in late May. Reserve your puppy now
             before this litter fills up!
           </p>
 

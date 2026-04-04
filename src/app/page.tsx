@@ -79,7 +79,8 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="bg-pattern" />
-      <div style={{
+      <a href="/spring-litter-2026.html" style={{
+        display: 'block',
         background: '#cc0000',
         color: '#fff',
         textAlign: 'center',
@@ -90,9 +91,11 @@ export default function Home() {
         fontFamily: 'Cinzel, serif',
         position: 'relative',
         zIndex: 9999,
+        textDecoration: 'none',
+        cursor: 'pointer',
       }}>
-        🐾 PUPPIES BIRTH DAY — TODAY! &nbsp;03/30/2026 &nbsp;🐾
-      </div>
+        🐾 Click Here to View Spring 2026 Litter 🐾
+      </a>
       <Navbar />
       <Hero />
       <KennelUpdates />
