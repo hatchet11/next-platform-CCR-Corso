@@ -76,17 +76,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css"
         />
 
-        {/* ─── Google Analytics 4 ───────────────────────────────────────
-            Replace G-XXXXXXXXXX with your Measurement ID from:
-            analytics.google.com → Admin → Data Streams → your stream
-        ──────────────────────────────────────────────────────────────── */}
-        {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" />
+        {/* ─── Google Analytics 4 ──────────────────────────────────────── */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3Z1DE24PLM" />
         <script dangerouslySetInnerHTML={{ __html: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-XXXXXXXXXX');
-        `}} /> */}
+          gtag('config', 'G-3Z1DE24PLM');
+        `}} />
 
         {/* ─── Schema.org Structured Data (Google Rich Results) ──────── */}
         <script
